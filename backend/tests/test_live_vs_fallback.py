@@ -9,11 +9,14 @@ from app.engine.runner.db_runner import DBRunner
 from app.engine.orchestrator import TestOrchestrator
 from app.engine.scoring.classifier import STATE_UNKNOWN, EWCESClassifier
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def db():
     session = SessionLocal()
     # Ensure no residual active chaos drifts interfere with isolation
     session.query(ChaosDriftRecord).filter_by(status="ACTIVE").update({"status": "RESTORED"})
+    session.query(EvidenceRecord).filter(
+        EvidenceRecord.test_id.in_(["TEST-VM-PAM-LOCKOUT-T1", "TEST-VM-PAM-LOCKOUT-T2"])
+    ).delete()
     session.commit()
     yield session
     session.close()
