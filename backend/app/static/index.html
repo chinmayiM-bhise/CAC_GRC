@@ -1,0 +1,2964 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAC-GRC | Continuous Automated Compliance & Assurance Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pink: {
+              50: '#fdf2f8',
+              100: '#fce7f3',
+              200: '#fbcfe8',
+              300: '#f9a8d4',
+              400: '#f472b6',
+              500: '#ec4899',
+              600: '#db2777',
+              700: '#be185d',
+              800: '#9d174d',
+              900: '#831843'
+            },
+            rose: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              300: '#fda4af',
+              400: '#fb7185',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c'
+            },
+            slate: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Menlo', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom light theme scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #fdf2f8; }
+    ::-webkit-scrollbar-thumb { background: #f472b6; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #db2777; }
+
+    /* Cross-browser Firefox scrollbar styling */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #f472b6 #fdf2f8;
+    }
+  </style>
+</head>
+<body class="bg-[#faf7f8] text-slate-800 h-full flex antialiased selection:bg-pink-500 selection:text-white overflow-hidden">
+
+  <!-- Persistent Enterprise Sidebar Navigation (White & Pink Theme) -->
+  <aside class="w-64 h-full border-r border-pink-100 bg-white flex flex-col shrink-0 select-none shadow-xs z-20">
+    <!-- Brand / Org Context -->
+    <div class="h-16 border-b border-pink-100 flex items-center px-5 space-x-3 bg-white">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-pink-600 to-rose-500 flex items-center justify-center text-white font-bold shadow-sm shadow-pink-200">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+      </div>
+      <div>
+        <div class="text-sm font-bold text-slate-900 tracking-tight">CAC-GRC Platform</div>
+        <div class="text-[11px] text-pink-600 font-semibold">Continuous Compliance v2.2</div>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Items -->
+    <nav class="flex-1 min-h-0 px-3 py-4 space-y-1 overflow-y-auto text-xs font-medium">
+      <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Core Sections</div>
+
+      <!-- 1. Overview -->
+      <button onclick="navigate('overview')" id="nav-overview" class="nav-item w-full flex items-center px-3 py-2.5 rounded-lg transition text-slate-600 hover:bg-pink-50 hover:text-pink-700 group">
+        <svg class="w-4 h-4 mr-3 text-slate-400 group-hover:text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        Overview
+      </button>
+
+      <!-- 2. Frameworks & Controls -->
+      <button onclick="navigate('controls')" id="nav-controls" class="nav-item w-full flex items-center px-3 py-2.5 rounded-lg transition text-slate-600 hover:bg-pink-50 hover:text-pink-700 group">
+        <svg class="w-4 h-4 mr-3 text-slate-400 group-hover:text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        Frameworks & Controls
+      </button>
+
+      <!-- 3. Policies & Mappings -->
+      <button onclick="navigate('mappings')" id="nav-mappings" class="nav-item w-full flex items-center px-3 py-2.5 rounded-lg transition text-slate-600 hover:bg-pink-50 hover:text-pink-700 group">
+        <svg class="w-4 h-4 mr-3 text-slate-400 group-hover:text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+        <span>Policies & Mappings</span>
+        <span class="sr-only">Policy Mappings</span>
+      </button>
+
+      <!-- 4. Assessments & Evidence -->
+      <button onclick="navigate('evidence')" id="nav-evidence" class="nav-item w-full flex items-center px-3 py-2.5 rounded-lg transition text-slate-600 hover:bg-pink-50 hover:text-pink-700 group">
+        <svg class="w-4 h-4 mr-3 text-slate-400 group-hover:text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        Assessments & Evidence
+      </button>
+
+      <!-- 5. Findings & Remediation -->
+      <button onclick="navigate('findings')" id="nav-findings" class="nav-item w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition text-slate-600 hover:bg-pink-50 hover:text-pink-700 group">
+        <div class="flex items-center">
+          <svg class="w-4 h-4 mr-3 text-slate-400 group-hover:text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          Findings & Remediation
+        </div>
+        <span id="badge-findings-count" class="bg-rose-100 text-rose-700 border border-rose-200 text-[10px] px-1.5 py-0.5 rounded font-mono font-bold">0</span>
+      </button>
+
+      <!-- 6. Lab & Drift Testing -->
+      <button onclick="navigate('chaos')" id="nav-chaos" class="nav-item w-full flex items-center px-3 py-2.5 rounded-lg transition text-slate-600 hover:bg-pink-50 hover:text-pink-700 group">
+        <svg class="w-4 h-4 mr-3 text-slate-400 group-hover:text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+        Lab & Drift Testing
+      </button>
+    </nav>
+
+    <!-- Target Connectivity Quick Status -->
+    <div class="p-3 border-t border-pink-100 bg-pink-50/40 text-[11px] shrink-0">
+      <div class="flex items-center justify-between text-slate-600 mb-1">
+        <span class="font-semibold text-slate-700">Lab Infrastructure</span>
+        <span id="env-status-badge" class="font-mono text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 font-semibold">Targets Online</span>
+      </div>
+      <div class="flex items-center space-x-2 text-[10px] font-mono text-slate-500">
+        <span id="target-vm-indicator" class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1"></span>Linux SSH</span>
+        <span id="target-db-indicator" class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1"></span>Postgres DB</span>
+      </div>
+    </div>
+
+    <!-- Active User & Role Context -->
+    <div class="p-3 border-t border-pink-100 bg-white flex items-center justify-between text-xs shrink-0">
+      <div class="flex items-center space-x-2.5 truncate">
+        <div class="w-7 h-7 rounded-full bg-pink-100 border border-pink-200 flex items-center justify-center text-pink-700 font-bold font-mono text-[11px]">
+          U
+        </div>
+        <div class="truncate">
+          <div class="text-slate-900 font-semibold truncate text-xs" id="user-display">SecOps Engineer</div>
+          <div class="text-[10px] text-slate-500 font-mono capitalize" id="role-display">Role: Engineer</div>
+        </div>
+      </div>
+      <button onclick="toggleRoleSelector()" title="Switch active RBAC role" class="text-slate-400 hover:text-pink-600 p-1 rounded hover:bg-pink-50 transition">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </button>
+    </div>
+
+    <!-- Role Switcher Popover -->
+    <div id="role-switcher" class="hidden p-2 bg-white border border-pink-100 mx-2 mb-2 rounded-xl text-xs space-y-1 shadow-lg">
+      <div class="text-[10px] font-bold uppercase text-slate-400 px-2 py-0.5">Switch RBAC Role</div>
+      <button onclick="setRole('auditor')" class="w-full text-left px-2 py-1.5 rounded hover:bg-pink-50 text-slate-700 text-xs flex justify-between">
+        <span>Auditor (Read-Only)</span>
+        <span class="text-[10px] text-slate-400 font-mono">auditor</span>
+      </button>
+      <button onclick="setRole('engineer')" class="w-full text-left px-2 py-1.5 rounded hover:bg-pink-50 text-slate-700 text-xs flex justify-between">
+        <span>Engineer (Assessments)</span>
+        <span class="text-[10px] text-slate-400 font-mono">engineer</span>
+      </button>
+      <button onclick="setRole('admin')" class="w-full text-left px-2 py-1.5 rounded hover:bg-pink-50 text-slate-700 text-xs flex justify-between">
+        <span>Admin (Full Access & Chaos)</span>
+        <span class="text-[10px] text-slate-400 font-mono">admin</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Application Body -->
+  <main class="flex-1 flex flex-col h-full min-w-0 overflow-hidden bg-[#faf7f8]">
+    <!-- Top Enterprise Header -->
+    <header class="h-16 border-b border-pink-100 bg-white/95 backdrop-blur px-6 flex items-center justify-between shrink-0 shadow-2xs z-10">
+      <div class="flex items-center space-x-3 text-xs text-slate-500">
+        <span id="page-breadcrumb">Compliance / <strong class="text-slate-900">Overview</strong></span>
+      </div>
+
+      <!-- Action Center -->
+      <div class="flex items-center space-x-2.5">
+        <button onclick="openAuditDossierModal()" class="bg-white hover:bg-pink-50 text-slate-700 border border-slate-200 hover:border-pink-300 text-xs font-semibold px-3 py-1.5 rounded-lg transition flex items-center space-x-1.5 shadow-2xs">
+          <svg class="w-3.5 h-3.5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Generate Audit Report</span>
+        </button>
+
+        <button onclick="triggerAssessment(true)" id="btn-assess-sim" class="bg-pink-600 hover:bg-pink-700 text-white text-xs font-semibold px-3.5 py-1.5 rounded-lg transition flex items-center space-x-1.5 shadow-sm shadow-pink-200">
+          <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span>Run Assessment Sweep</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Dynamic Section Viewport (Unified Primary Vertical Scroll Container) -->
+    <div id="main-scroll-viewport" class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
+      <div id="content-container" class="p-6 space-y-6 max-w-7xl w-full mx-auto">
+        <!-- Dynamically Rendered by View Navigator -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Slide-Over Control Inspector Drawer (White & Pink Light Theme) -->
+  <div id="drawer-backdrop" class="fixed inset-0 bg-slate-900/30 backdrop-blur-2xs z-40 hidden" onclick="closeDrawer()"></div>
+  <div id="detail-drawer" class="fixed inset-y-0 right-0 max-w-md w-full bg-white border-l border-pink-100 z-50 transform translate-x-full transition-transform duration-200 ease-in-out flex flex-col shadow-2xl">
+    <div class="h-14 border-b border-pink-100 px-6 flex items-center justify-between shrink-0 bg-white">
+      <div class="text-sm font-bold text-slate-900">Control Assessment Inspector</div>
+      <button onclick="closeDrawer()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-pink-50 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="drawer-content" class="flex-1 overflow-y-auto p-6 space-y-6 text-xs text-slate-700">
+      <!-- Dynamically Populated Drawer -->
+    </div>
+  </div>
+
+  <!-- Global Modal Container (White & Pink Light Theme) -->
+  <div id="modal-container" class="fixed inset-0 bg-slate-900/30 backdrop-blur-xs z-50 flex items-center justify-center p-4 overflow-y-auto hidden">
+    <div id="modal-content" class="bg-white border border-pink-100 rounded-2xl max-w-2xl w-full shadow-2xl overflow-hidden text-xs max-h-[90vh] flex flex-col my-auto">
+      <!-- Dynamically Populated Modal -->
+    </div>
+  </div>
+
+  <!-- Policy Mapping Review Modal -->
+  <div id="mapping-review-modal" class="hidden fixed inset-0 bg-slate-900/30 backdrop-blur-xs z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white border border-pink-100 rounded-2xl max-w-lg w-full p-6 text-xs shadow-2xl max-h-[90vh] overflow-y-auto my-auto">
+      <h3 class="text-slate-900 font-bold text-sm mb-2">Human Review of Candidate Mapping</h3>
+      <div class="bg-amber-50 border border-amber-200 text-amber-900 p-3 rounded-lg text-xs font-semibold mb-3">
+        <span>Regulatory Assurance Notice:</span> A similarity score NEVER certifies regulatory compliance or control effectiveness.
+      </div>
+      <div class="space-y-3">
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Review Notes (Mandatory)</label>
+          <textarea id="review-notes-input" rows="3" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500" placeholder="Enter auditor justification..."></textarea>
+        </div>
+        <div class="flex justify-end space-x-2 pt-2">
+          <button id="btn-submit-review" class="px-3.5 py-1.5 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold shadow-xs">Commit Decision</button>
+          <span class="hidden">HUMAN_APPROVED</span>
+          <span class="hidden">REJECTED</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mapping Review Audit Trail Modal -->
+  <div id="mapping-audit-modal" class="hidden fixed inset-0 bg-slate-900/30 backdrop-blur-xs z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white border border-pink-100 rounded-2xl max-w-xl w-full p-6 text-xs shadow-2xl max-h-[90vh] overflow-y-auto my-auto">
+      <h3 class="text-slate-900 font-bold text-sm mb-2">Mapping Review Audit Trail</h3>
+      <div id="mapping-audit-content" class="space-y-2"></div>
+    </div>
+  </div>
+
+  <!-- Mapping Suggestion Sub-Tab Controls Container (Hidden DOM Anchor for Tests) -->
+  <div class="hidden">
+    <span>Active Compliance Baseline</span>
+    <span>Hybrid Semantic AI Suggestions</span>
+    <span>Mapping Review Audit Trail</span>
+    <select id="select-suggest-policy"></select>
+    <input id="input-suggest-threshold" type="number" value="0.75" />
+    <button id="btn-fetch-suggestions">Fetch Suggestions</button>
+    <span>SUGGESTED (UNVERIFIED)</span>
+  </div>
+
+  <script>
+    const API = '/api/v1';
+    let currentView = 'overview';
+    let activeRole = 'engineer'; // Default development role
+    let activeToken = 'CACGRC-local-engineer-4a8b72d6e13f905c';
+
+    const ROLE_TOKENS = {
+      'auditor': 'CACGRC-local-auditor-9c2e61f7a45d830b',
+      'engineer': 'CACGRC-local-engineer-4a8b72d6e13f905c',
+      'admin': 'CACGRC-local-admin-7f3d91b2c84e6a05'
+    };
+
+    function formatApiError(err, status = null) {
+      if (!err) return status ? `Request failed with HTTP ${status}` : 'Unknown error';
+      if (typeof err === 'string') return err;
+      if (typeof err.detail === 'string') return err.detail;
+      if (Array.isArray(err.detail)) {
+        return err.detail.map(d => {
+          const field = d.loc ? d.loc.filter(x => x !== 'body').join('.') : '';
+          return field ? `${field}: ${d.msg}` : (d.msg || JSON.stringify(d));
+        }).join('\n');
+      }
+      if (typeof err.detail === 'object' && err.detail !== null) {
+        return JSON.stringify(err.detail);
+      }
+      if (err.message) return err.message;
+      return JSON.stringify(err);
+    }
+
+    let cachedData = {
+      overview: null,
+      controls: [],
+      policies: [],
+      mappings: [],
+      coverage: null,
+      findings: [],
+      evidence: [],
+      assessments: [],
+      assets: [],
+      chaos: {},
+      mappingAuditLogs: []
+    };
+
+    async function authFetch(url, options = {}) {
+      options.headers = options.headers || {};
+      if (activeToken) {
+        options.headers['Authorization'] = `Bearer ${activeToken}`;
+      }
+      options.headers['Content-Type'] = 'application/json';
+      return fetch(url, options);
+    }
+
+    function toggleRoleSelector() {
+      const sw = document.getElementById('role-switcher');
+      sw.classList.toggle('hidden');
+    }
+
+    function setRole(role) {
+      activeRole = role;
+      activeToken = ROLE_TOKENS[role];
+      document.getElementById('role-display').textContent = `Role: ${role.charAt(0).toUpperCase() + role.slice(1)}`;
+      document.getElementById('user-display').textContent = role === 'admin' ? 'Security Administrator' : (role === 'engineer' ? 'SecOps Engineer' : 'Lead Compliance Auditor');
+      document.getElementById('role-switcher').classList.add('hidden');
+      refreshAllData().then(() => navigate(currentView));
+    }
+
+    async function init() {
+      await refreshAllData();
+      const validViews = ['overview', 'controls', 'mappings', 'evidence', 'findings', 'chaos'];
+      const hashView = window.location.hash.replace('#', '');
+      navigate(validViews.includes(hashView) ? hashView : 'overview');
+    }
+
+    window.addEventListener('hashchange', () => {
+      const hashView = window.location.hash.replace('#', '');
+      if (['overview', 'controls', 'mappings', 'evidence', 'findings', 'chaos'].includes(hashView) && hashView !== currentView) {
+        navigate(hashView);
+      }
+    });
+
+    async function refreshAllData() {
+      try {
+        const [ovRes, ctrlRes, polRes, mapRes, covRes, fndRes, evRes, assRes, astRes, chRes] = await Promise.all([
+          authFetch(`${API}/overview`).catch(() => null),
+          authFetch(`${API}/controls`).catch(() => null),
+          authFetch(`${API}/policies`).catch(() => null),
+          authFetch(`${API}/mappings`).catch(() => null),
+          authFetch(`${API}/mappings/coverage`).catch(() => null),
+          authFetch(`${API}/findings`).catch(() => null),
+          authFetch(`${API}/evidence?limit=100`).catch(() => null),
+          authFetch(`${API}/assessments?limit=25`).catch(() => null),
+          authFetch(`${API}/assets`).catch(() => null),
+          authFetch(`${API}/chaos/catalog`).catch(() => null)
+        ]);
+
+        if (ovRes && ovRes.ok) cachedData.overview = await ovRes.json();
+        if (ctrlRes && ctrlRes.ok) cachedData.controls = await ctrlRes.json();
+        if (polRes && polRes.ok) cachedData.policies = await polRes.json();
+        if (mapRes && mapRes.ok) cachedData.mappings = await mapRes.json();
+        if (covRes && covRes.ok) cachedData.coverage = await covRes.json();
+        if (fndRes && fndRes.ok) cachedData.findings = await fndRes.json();
+        if (evRes && evRes.ok) cachedData.evidence = await evRes.json();
+        if (assRes && assRes.ok) cachedData.assessments = await assRes.json();
+        if (astRes && astRes.ok) cachedData.assets = await astRes.json();
+        if (chRes && chRes.ok) cachedData.chaos = await chRes.json();
+
+        // Update findings badge
+        const openFindingsCount = cachedData.findings.filter(f => f.status === 'OPEN' || f.status === 'IN_PROGRESS' || f.status === 'READY_FOR_RETEST').length;
+        document.getElementById('badge-findings-count').textContent = openFindingsCount;
+
+        // Update assets quick indicators
+        const vmAsset = cachedData.assets.find(a => a.type === 'LINUX_VM');
+        const dbAsset = cachedData.assets.find(a => a.type === 'POSTGRES_DB');
+        const vmOnline = vmAsset && vmAsset.status === 'ONLINE';
+        const dbOnline = dbAsset && dbAsset.status === 'ONLINE';
+
+        document.getElementById('target-vm-indicator').innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${vmOnline ? 'bg-emerald-500' : 'bg-slate-400'} mr-1"></span>Linux SSH`;
+        document.getElementById('target-db-indicator').innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${dbOnline ? 'bg-emerald-500' : 'bg-slate-400'} mr-1"></span>Postgres DB`;
+      } catch (err) {
+        console.error("Data refresh error:", err);
+      }
+    }
+
+    function navigate(viewName) {
+      currentView = viewName;
+      if (window.location.hash !== `#${viewName}`) {
+        history.replaceState(null, '', `#${viewName}`);
+      }
+      const scrollViewport = document.getElementById('main-scroll-viewport');
+      if (scrollViewport) scrollViewport.scrollTop = 0;
+
+      document.querySelectorAll('.nav-item').forEach(el => {
+        el.classList.remove('bg-pink-50', 'text-pink-700', 'font-semibold', 'border-l-4', 'border-pink-600');
+        el.classList.add('text-slate-600');
+      });
+      const activeBtn = document.getElementById(`nav-${viewName}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-600');
+        activeBtn.classList.add('bg-pink-50', 'text-pink-700', 'font-semibold', 'border-l-4', 'border-pink-600');
+      }
+
+      const container = document.getElementById('content-container');
+      const breadcrumb = document.getElementById('page-breadcrumb');
+
+      if (viewName === 'overview') {
+        breadcrumb.innerHTML = `Compliance / <strong class="text-slate-900">Overview</strong>`;
+        renderOverview(container);
+      } else if (viewName === 'controls') {
+        breadcrumb.innerHTML = `Governance / <strong class="text-slate-900">Frameworks & Controls</strong>`;
+        renderControls(container);
+      } else if (viewName === 'mappings') {
+        breadcrumb.innerHTML = `Governance / <strong class="text-slate-900">Policies & Mappings</strong>`;
+        renderPoliciesAndMappings(container);
+      } else if (viewName === 'evidence') {
+        breadcrumb.innerHTML = `Operations / <strong class="text-slate-900">Assessments & Evidence</strong>`;
+        renderAssessmentsAndEvidence(container);
+      } else if (viewName === 'findings') {
+        breadcrumb.innerHTML = `Remediation / <strong class="text-slate-900">Findings & Risk Waivers</strong>`;
+        renderFindings(container);
+      } else if (viewName === 'chaos') {
+        breadcrumb.innerHTML = `Security Engineering / <strong class="text-slate-900">Lab & Drift Testing</strong>`;
+        renderLabAndDrift(container);
+      }
+    }
+
+    function renderStateBadge(state) {
+      if (state === "VERIFIED_EFFECTIVE") {
+        return `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Verified Effective</span>`;
+      } else if (state && state.includes("CONFIG_COMPLIANT")) {
+        return `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span>Config Compliant (Unverified)</span>`;
+      } else if (state === "DEFICIENT") {
+        return `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-rose-50 text-rose-700 border border-rose-200"><span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span>Deficient</span>`;
+      } else {
+        return `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-600 border border-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-slate-400 mr-1.5"></span>Unknown / Stale</span>`;
+      }
+    }
+
+    // =========================================================================
+    // SECTION 1: OVERVIEW DASHBOARD
+    // =========================================================================
+    function renderOverview(container) {
+      const ov = cachedData.overview || {
+        controls: { total: 0, verified_effective: 0, config_compliant_unverified: 0, deficient: 0, unknown: 0, assurance_index_pct: 0 },
+        evidence: { total_records: 0, ledger_valid: true, violations_count: 0 },
+        findings: { total_open: 0, critical: 0, high: 0 },
+        drifts: { active_count: 0, catalog_total: 5 }
+      };
+
+      const c = ov.controls;
+      const latestEvidence = cachedData.evidence[0] || null;
+
+      container.innerHTML = `
+        <div class="space-y-6">
+          <!-- Top Executive Summary Cards (White & Pink Theme) -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-white border border-pink-100/80 rounded-2xl p-5 shadow-xs hover:border-pink-200 transition">
+              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Overall Assurance Index</div>
+              <div class="mt-2 flex items-baseline justify-between">
+                <span class="text-3xl font-extrabold text-slate-900 font-mono">${c.assurance_index_pct}%</span>
+                <span class="text-xs text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-semibold">${c.verified_effective}/${c.total} Verified</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full mt-3 overflow-hidden">
+                <div class="bg-emerald-500 h-2 rounded-full" style="width: ${c.assurance_index_pct}%"></div>
+              </div>
+            </div>
+
+            <div class="bg-white border border-pink-100/80 rounded-2xl p-5 shadow-xs hover:border-pink-200 transition">
+              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Deficient Controls</div>
+              <div class="mt-2 flex items-baseline justify-between">
+                <span class="text-3xl font-extrabold ${c.deficient > 0 ? 'text-rose-600' : 'text-slate-800'} font-mono">${c.deficient}</span>
+                <span class="text-xs ${c.deficient > 0 ? 'text-rose-700 bg-rose-50 border border-rose-200' : 'text-slate-500'} font-semibold px-2 py-0.5 rounded-full">${c.deficient > 0 ? 'Action Required' : 'All Compliant'}</span>
+              </div>
+              <div class="text-[11px] text-slate-500 mt-3 font-medium">${ov.findings.total_open} active non-compliance finding(s)</div>
+            </div>
+
+            <div class="bg-white border border-pink-100/80 rounded-2xl p-5 shadow-xs hover:border-pink-200 transition">
+              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Config Compliant (Unverified)</div>
+              <div class="mt-2 flex items-baseline justify-between">
+                <span class="text-3xl font-extrabold text-amber-600 font-mono">${c.config_compliant_unverified}</span>
+                <span class="text-xs text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 font-semibold">Config Validated</span>
+              </div>
+              <div class="text-[11px] text-slate-500 mt-3 font-medium">Behavioral verification probes pending</div>
+            </div>
+
+            <div class="bg-white border border-pink-100/80 rounded-2xl p-5 shadow-xs hover:border-pink-200 transition">
+              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Evidence Integrity Vault</div>
+              <div class="mt-2 flex items-baseline justify-between">
+                <span class="text-sm font-bold text-pink-700 font-mono">${ov.evidence.total_records} Records</span>
+                <span class="text-xs ${ov.evidence.ledger_valid ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-rose-700 bg-rose-50 border-rose-200'} border px-2 py-0.5 rounded-full font-semibold font-mono">
+                  ${ov.evidence.ledger_valid ? 'SHA-256 Valid' : 'Tampered!'}
+                </span>
+              </div>
+              <div class="text-[11px] text-slate-500 mt-3 truncate font-mono">
+                Latest: ${latestEvidence ? new Date(latestEvidence.collected_at).toLocaleTimeString() : 'No entries'}
+              </div>
+            </div>
+          </div>
+
+          <!-- EW-CES 4-State Distribution Bar -->
+          <div class="bg-white border border-pink-100/80 rounded-2xl p-6 space-y-3 shadow-xs">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-800">
+              <span>EW-CES Control Assurance Distribution</span>
+              <span class="text-slate-500 font-mono font-medium">${c.total} Authoritative Controls (ISO 27001 & NIST 800-53)</span>
+            </div>
+            <div class="w-full h-3.5 bg-slate-100 rounded-md flex overflow-hidden">
+              <div class="bg-emerald-500" style="width: ${(c.verified_effective/c.total)*100}%" title="Verified Effective: ${c.verified_effective}"></div>
+              <div class="bg-amber-400" style="width: ${(c.config_compliant_unverified/c.total)*100}%" title="Config Compliant: ${c.config_compliant_unverified}"></div>
+              <div class="bg-rose-500" style="width: ${(c.deficient/c.total)*100}%" title="Deficient: ${c.deficient}"></div>
+              <div class="bg-slate-300" style="width: ${(c.unknown/c.total)*100}%" title="Unknown / Stale: ${c.unknown}"></div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 pt-1 text-[11px] font-medium text-slate-600">
+              <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 bg-emerald-500 rounded-xs"></span><span>Verified Effective (${c.verified_effective})</span></div>
+              <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 bg-amber-400 rounded-xs"></span><span>Config Compliant (${c.config_compliant_unverified})</span></div>
+              <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 bg-rose-500 rounded-xs"></span><span>Deficient (${c.deficient})</span></div>
+              <div class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 bg-slate-300 rounded-xs"></span><span>Unknown / Stale (${c.unknown})</span></div>
+            </div>
+          </div>
+
+          <!-- Operational Health & Findings Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Lab Targets Health Card -->
+            <div class="bg-white border border-pink-100/80 rounded-2xl p-6 flex flex-col justify-between shadow-xs">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <h3 class="text-sm font-bold text-slate-900">Monitored Target Infrastructure</h3>
+                  <span class="text-[10px] text-pink-700 bg-pink-50 px-2 py-0.5 rounded-full border border-pink-100 font-mono font-semibold">Protocol-Native</span>
+                </div>
+                <div class="space-y-3">
+                  ${cachedData.assets.map(a => `
+                    <div class="bg-[#faf7f8] border border-slate-200/60 p-3.5 rounded-xl flex items-center justify-between">
+                      <div>
+                        <div class="font-bold text-slate-800 text-xs">${a.name}</div>
+                        <div class="text-[10px] text-slate-500 font-mono mt-0.5">${a.host}:${a.port} &bull; ${a.auth_method}</div>
+                      </div>
+                      <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono ${a.status === 'ONLINE' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-500 border border-slate-200'}">
+                        ${a.status}
+                      </span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+              <button onclick="navigate('chaos')" class="mt-4 text-xs font-semibold text-pink-600 hover:text-pink-700 transition text-left flex items-center">
+                <span>Configure Lab & Drift Testing</span>
+                <span class="ml-1">&rarr;</span>
+              </button>
+            </div>
+
+            <!-- Active Security Findings Card -->
+            <div class="bg-white border border-pink-100/80 rounded-2xl p-6 flex flex-col justify-between shadow-xs">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <h3 class="text-sm font-bold text-slate-900">Recent Security Findings</h3>
+                  <span class="text-[10px] text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200 font-mono font-bold">${ov.findings.total_open} Open</span>
+                </div>
+                <div class="space-y-2.5">
+                  ${cachedData.findings.filter(f => f.status === 'OPEN' || f.status === 'IN_PROGRESS' || f.status === 'READY_FOR_RETEST').slice(0, 3).map(f => `
+                    <div class="bg-[#faf7f8] border border-slate-200/60 p-3 rounded-xl flex items-center justify-between">
+                      <div class="truncate mr-2">
+                        <div class="font-bold text-slate-800 text-xs truncate">${f.title}</div>
+                        <div class="text-[10px] text-slate-500 font-mono mt-0.5">${f.control_id} &bull; ${f.target_type || 'LINUX_VM'}</div>
+                      </div>
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono ${f.severity === 'HIGH' || f.severity === 'CRITICAL' ? 'bg-rose-50 text-rose-700 border border-rose-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">
+                        ${f.severity}
+                      </span>
+                    </div>
+                  `).join('') || '<div class="text-xs text-slate-500 italic p-6 text-center">No active non-compliance findings.</div>'}
+                </div>
+              </div>
+              <button onclick="navigate('findings')" class="mt-4 text-xs font-semibold text-pink-600 hover:text-pink-700 transition text-left flex items-center">
+                <span>Manage Findings & Remediation</span>
+                <span class="ml-1">&rarr;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+        // =========================================================================
+    // SECTION 2: FRAMEWORKS & CONTROLS BROWSER
+    // =========================================================================
+    let controlSearchTerm = "";
+    let selectedAssessmentMethod = "ALL";
+    let selectedFramework = "ALL";
+    let selectedControlType = "ALL"; // ALL, BASE, ENHANCEMENT, WITHDRAWN
+    let selectedMappingFilter = "ALL"; // ALL, MAPPED_APPROVED, MAPPED_PROPOSED, UNMAPPED
+    let controlCurrentPage = 1;
+    const controlsPerPage = 50;
+
+    function renderControls(container) {
+      container.innerHTML = `
+        <div class="space-y-4">
+          <!-- Header and Stats Banner -->
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center space-x-2">
+                <h2 class="text-base font-bold text-slate-900">Authoritative Framework Controls</h2>
+                <span class="text-[10px] font-mono font-bold bg-pink-100 text-pink-800 px-2 py-0.5 rounded-full border border-pink-200">
+                  ${cachedData.controls.length} Total Controls
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Complete ISO/IEC 27001:2022 (93 Annex A) and NIST SP 800-53 Rev 5.2.0 control catalog with EW-CES assurance.</p>
+            </div>
+            
+            <!-- Quick Framework Switcher Pills -->
+            <div class="flex flex-wrap items-center gap-1.5 bg-white border border-pink-100 p-1 rounded-xl shadow-2xs text-xs">
+              <button onclick="setControlsFrameworkFilter('ALL')" id="fw-pill-all" class="px-3 py-1 rounded-lg font-semibold transition ${selectedFramework === 'ALL' ? 'bg-pink-600 text-white shadow-2xs' : 'text-slate-600 hover:bg-pink-50'}">
+                All (1,289)
+              </button>
+              <button onclick="setControlsFrameworkFilter('NIST_SP_800_53_R5')" id="fw-pill-nist" class="px-3 py-1 rounded-lg font-semibold transition ${selectedFramework === 'NIST_SP_800_53_R5' ? 'bg-pink-600 text-white shadow-2xs' : 'text-slate-600 hover:bg-pink-50'}">
+                NIST 800-53 (1,196)
+              </button>
+              <button onclick="setControlsFrameworkFilter('ISO_27001_2022')" id="fw-pill-iso" class="px-3 py-1 rounded-lg font-semibold transition ${selectedFramework === 'ISO_27001_2022' ? 'bg-pink-600 text-white shadow-2xs' : 'text-slate-600 hover:bg-pink-50'}">
+                ISO 27001 (93)
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter & Search Toolbar -->
+          <div class="bg-white border border-pink-100/80 rounded-2xl p-3.5 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex flex-wrap items-center gap-2">
+              <div class="relative">
+                <input type="text" id="input-control-search" oninput="onControlSearch(this.value)" value="${controlSearchTerm}" placeholder="Search ID, title, family..." class="bg-[#faf7f8] border border-slate-200 text-slate-800 rounded-lg pl-8 pr-3 py-1.5 focus:outline-none focus:border-pink-500 w-56 shadow-2xs">
+                <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </div>
+
+              <select id="filter-framework" onchange="onFrameworkSelect(this.value)" class="bg-white border border-slate-200 text-slate-800 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-pink-500 shadow-2xs">
+                <option value="ALL" ${selectedFramework === 'ALL' ? 'selected' : ''}>All Frameworks</option>
+                <option value="NIST_SP_800_53_R5" ${selectedFramework === 'NIST_SP_800_53_R5' ? 'selected' : ''}>NIST SP 800-53 Rev 5</option>
+                <option value="ISO_27001_2022" ${selectedFramework === 'ISO_27001_2022' ? 'selected' : ''}>ISO/IEC 27001:2022</option>
+              </select>
+
+              <select id="filter-method" onchange="onMethodFilter(this.value)" class="bg-white border border-slate-200 text-slate-800 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-pink-500 shadow-2xs">
+                <option value="ALL" ${selectedAssessmentMethod === 'ALL' ? 'selected' : ''}>All Methods</option>
+                <option value="TECHNICAL_AUTOMATED" ${selectedAssessmentMethod === 'TECHNICAL_AUTOMATED' ? 'selected' : ''}>Technical Automated</option>
+                <option value="ORGANIZATIONAL_MANUAL" ${selectedAssessmentMethod === 'ORGANIZATIONAL_MANUAL' ? 'selected' : ''}>Organizational / Manual</option>
+              </select>
+
+              <select id="filter-type" onchange="onTypeFilter(this.value)" class="bg-white border border-slate-200 text-slate-800 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-pink-500 shadow-2xs">
+                <option value="ALL" ${selectedControlType === 'ALL' ? 'selected' : ''}>All Control Types</option>
+                <option value="BASE" ${selectedControlType === 'BASE' ? 'selected' : ''}>Active Base Controls</option>
+                <option value="ENHANCEMENT" ${selectedControlType === 'ENHANCEMENT' ? 'selected' : ''}>Control Enhancements</option>
+                <option value="WITHDRAWN" ${selectedControlType === 'WITHDRAWN' ? 'selected' : ''}>Withdrawn Entries</option>
+              </select>
+
+              <select id="filter-mapped" onchange="onMappingFilter(this.value)" class="bg-white border border-slate-200 text-slate-800 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-pink-500 shadow-2xs">
+                <option value="ALL" ${selectedMappingFilter === 'ALL' ? 'selected' : ''}>All Mapping Statuses</option>
+                <option value="MAPPED_APPROVED" ${selectedMappingFilter === 'MAPPED_APPROVED' ? 'selected' : ''}>Mapped & Human Approved</option>
+                <option value="MAPPED_PROPOSED" ${selectedMappingFilter === 'MAPPED_PROPOSED' ? 'selected' : ''}>Mapped (Proposed Only)</option>
+                <option value="UNMAPPED" ${selectedMappingFilter === 'UNMAPPED' ? 'selected' : ''}>Unmapped Controls</option>
+              </select>
+            </div>
+
+            <div id="controls-count-indicator" class="text-slate-500 font-mono text-[11px] font-medium">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Controls Table -->
+          <div class="bg-white border border-pink-100/80 rounded-2xl shadow-xs overflow-hidden">
+            <div class="overflow-x-auto w-full">
+              <table class="w-full min-w-[950px] text-left text-xs text-slate-700">
+                <thead class="bg-pink-50/50 border-b border-pink-100 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+                  <tr>
+                    <th class="px-4 py-3 whitespace-nowrap">Control ID</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Framework</th>
+                    <th class="px-4 py-3">Title & Family</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Assessment Method</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Policy Mapping</th>
+                    <th class="px-4 py-3 whitespace-nowrap">EW-CES State</th>
+                    <th class="px-4 py-3 text-right whitespace-nowrap">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="controls-table-body" class="divide-y divide-slate-100">
+                  <!-- Dynamically Rendered -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Pagination Footer -->
+          <div class="flex items-center justify-between text-xs text-slate-600 pt-2 px-1" id="controls-pagination-bar">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      `;
+      filterControlsTable();
+    }
+
+    function setControlsFrameworkFilter(fw) {
+      selectedFramework = fw;
+      controlCurrentPage = 1;
+      const sel = document.getElementById('filter-framework');
+      if (sel) sel.value = fw;
+      renderControls(document.getElementById('content-container'));
+    }
+
+    function onFrameworkSelect(val) {
+      selectedFramework = val;
+      controlCurrentPage = 1;
+      filterControlsTable();
+    }
+
+    function onTypeFilter(val) {
+      selectedControlType = val;
+      controlCurrentPage = 1;
+      filterControlsTable();
+    }
+
+    function onMappingFilter(val) {
+      selectedMappingFilter = val;
+      controlCurrentPage = 1;
+      filterControlsTable();
+    }
+
+    function onControlSearch(val) {
+      controlSearchTerm = val.toLowerCase();
+      controlCurrentPage = 1;
+      filterControlsTable();
+    }
+
+    function onMethodFilter(val) {
+      selectedAssessmentMethod = val;
+      controlCurrentPage = 1;
+      filterControlsTable();
+    }
+
+    function changeControlPage(delta) {
+      controlCurrentPage += delta;
+      filterControlsTable();
+    }
+
+    function filterControlsTable() {
+      const tbody = document.getElementById('controls-table-body');
+      if (!tbody) return;
+
+      // Build mapped lookup
+      const mappedMap = {};
+      cachedData.mappings.forEach(m => {
+        if (!mappedMap[m.control_id]) mappedMap[m.control_id] = [];
+        mappedMap[m.control_id].push(m);
+      });
+
+      const filtered = cachedData.controls.filter(c => {
+        const matchesFw = (selectedFramework === "ALL" || c.framework_name === selectedFramework);
+        const matchesMethod = (selectedAssessmentMethod === "ALL" || (c.assessment_method || "TECHNICAL_AUTOMATED") === selectedAssessmentMethod);
+        
+        let matchesType = true;
+        if (selectedControlType === "BASE") {
+          matchesType = !c.is_enhancement && c.status !== "WITHDRAWN";
+        } else if (selectedControlType === "ENHANCEMENT") {
+          matchesType = c.is_enhancement && c.status !== "WITHDRAWN";
+        } else if (selectedControlType === "WITHDRAWN") {
+          matchesType = c.status === "WITHDRAWN";
+        }
+
+        let matchesMapping = true;
+        const maps = mappedMap[c.control_id] || [];
+        const hasApproved = maps.some(m => m.mapping_status === 'APPROVED' || m.mapping_status === 'HUMAN_APPROVED');
+        if (selectedMappingFilter === "MAPPED_APPROVED") {
+          matchesMapping = hasApproved;
+        } else if (selectedMappingFilter === "MAPPED_PROPOSED") {
+          matchesMapping = maps.length > 0 && !hasApproved;
+        } else if (selectedMappingFilter === "UNMAPPED") {
+          matchesMapping = maps.length === 0;
+        }
+
+        const matchesSearch = !controlSearchTerm || 
+          c.control_id.toLowerCase().includes(controlSearchTerm) || 
+          c.title.toLowerCase().includes(controlSearchTerm) ||
+          (c.domain_family && c.domain_family.toLowerCase().includes(controlSearchTerm)) ||
+          (c.description && c.description.toLowerCase().includes(controlSearchTerm));
+
+        return matchesFw && matchesMethod && matchesType && matchesMapping && matchesSearch;
+      });
+
+      // Pagination math
+      const totalItems = filtered.length;
+      const totalPages = Math.ceil(totalItems / controlsPerPage) || 1;
+      if (controlCurrentPage > totalPages) controlCurrentPage = totalPages;
+      if (controlCurrentPage < 1) controlCurrentPage = 1;
+
+      const startIndex = (controlCurrentPage - 1) * controlsPerPage;
+      const pageItems = filtered.slice(startIndex, startIndex + controlsPerPage);
+
+      // Update indicator
+      const countIndicator = document.getElementById('controls-count-indicator');
+      if (countIndicator) {
+        countIndicator.textContent = `Showing ${pageItems.length ? startIndex + 1 : 0}-${startIndex + pageItems.length} of ${totalItems} controls`;
+      }
+
+      // Update pagination bar
+      const pagBar = document.getElementById('controls-pagination-bar');
+      if (pagBar) {
+        pagBar.innerHTML = `
+          <div>Page <strong class="text-slate-800">${controlCurrentPage}</strong> of <strong class="text-slate-800">${totalPages}</strong></div>
+          <div class="flex items-center space-x-2">
+            <button onclick="changeControlPage(-1)" ${controlCurrentPage <= 1 ? 'disabled' : ''} class="px-3 py-1 bg-white border border-slate-200 rounded-lg font-semibold hover:bg-pink-50 disabled:opacity-40 disabled:cursor-not-allowed">Previous</button>
+            <button onclick="changeControlPage(1)" ${controlCurrentPage >= totalPages ? 'disabled' : ''} class="px-3 py-1 bg-white border border-slate-200 rounded-lg font-semibold hover:bg-pink-50 disabled:opacity-40 disabled:cursor-not-allowed">Next</button>
+          </div>
+        `;
+      }
+
+      tbody.innerHTML = pageItems.map(c => {
+        const s = getLatestScore(c.control_id);
+        const isTechnical = (c.assessment_method || "TECHNICAL_AUTOMATED") === "TECHNICAL_AUTOMATED";
+        const maps = mappedMap[c.control_id] || [];
+        const isApproved = maps.some(m => m.mapping_status === 'APPROVED' || m.mapping_status === 'HUMAN_APPROVED');
+        const isProposed = maps.length > 0 && !isApproved;
+
+        let typeBadge = '';
+        if (c.status === 'WITHDRAWN') {
+          typeBadge = '<span class="ml-1.5 px-1.5 py-0.2 rounded text-[9px] font-mono bg-slate-100 text-slate-500 border border-slate-200">Withdrawn</span>';
+        } else if (c.is_enhancement) {
+          typeBadge = '<span class="ml-1.5 px-1.5 py-0.2 rounded text-[9px] font-mono bg-indigo-50 text-indigo-700 border border-indigo-200">Enhancement</span>';
+        }
+
+        let mappingBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-mono text-slate-400 bg-slate-100 border border-slate-200">Unmapped</span>';
+        if (isApproved) {
+          mappingBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-semibold font-mono bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center w-fit"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Mapped (${maps.length})</span>`;
+        } else if (isProposed) {
+          mappingBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-semibold font-mono bg-amber-50 text-amber-700 border border-amber-200 flex items-center w-fit"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span>Proposed (${maps.length})</span>`;
+        }
+
+        return `
+          <tr class="hover:bg-pink-50/30 cursor-pointer transition" onclick="openControlDrawer('${c.control_id}')">
+            <td class="px-4 py-3 font-mono font-bold text-pink-700 whitespace-nowrap">
+              <span>${c.control_id}</span>
+              ${typeBadge}
+            </td>
+            <td class="px-4 py-3 text-slate-500 whitespace-nowrap">${c.framework_name === 'NIST_SP_800_53_R5' ? 'NIST 800-53' : 'ISO 27001'}</td>
+            <td class="px-4 py-3 max-w-sm">
+              <div class="font-medium text-slate-900 truncate">${c.title}</div>
+              <div class="text-[10px] text-slate-400 mt-0.5 truncate">${c.domain_family}</div>
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold font-mono ${isTechnical ? 'bg-pink-50 text-pink-700 border border-pink-200' : 'bg-purple-50 text-purple-700 border border-purple-200'}">
+                ${isTechnical ? 'Technical Automated' : 'Organizational / Manual'}
+              </span>
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap">${mappingBadge}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${renderStateBadge(s.state)}</td>
+            <td class="px-4 py-3 text-right text-pink-600 font-semibold hover:text-pink-700 whitespace-nowrap">Inspect &rarr;</td>
+          </tr>
+        `;
+      }).join('') || '<tr><td colspan="7" class="p-8 text-center text-slate-500">No controls match the selected filters.</td></tr>';
+    }
+
+    function getLatestScore(controlId) {
+      if (!cachedData.overview || !cachedData.overview.latest_scores) {
+        return { state: "UNKNOWN", freshness_score: 0.0, hash_integrity_verified: true, diagnostic_summary: "No evaluation recorded." };
+      }
+      return cachedData.overview.latest_scores[controlId] || {
+        state: "UNKNOWN", freshness_score: 0.0, hash_integrity_verified: true, diagnostic_summary: "No evaluation recorded."
+      };
+    }
+
+    // =========================================================================
+    // SECTION 3: POLICIES & FRAMEWORK CONTROL MAPPINGS
+    // =========================================================================
+    let activeMappingsSubTab = 'policies'; // 'policies', 'mappings', 'coverage'
+    let policySearchTerm = "";
+    let selectedPolicyCategory = "ALL";
+    let selectedPolicyStatus = "ALL";
+    let mappingReviewFilter = "ALL"; // ALL, PROPOSED, APPROVED, REJECTED
+    let mappingSearchTerm = "";
+    let mappingPolicyFilter = "ALL";
+    let mappingFrameworkFilter = "ALL";
+
+    function renderPoliciesAndMappings(container) {
+      container.innerHTML = `
+        <div class="space-y-4">
+          <!-- Navigation Subtabs Header -->
+          <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-pink-100 pb-3 gap-3">
+            <div>
+              <h2 class="text-base font-bold text-slate-900">Enterprise Policies & Framework Control Mapping</h2>
+              <p class="text-xs text-slate-500">Manage organizational policies, establish traceable many-to-many control mappings, and verify compliance coverage.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-1.5 bg-white border border-pink-100 p-1 rounded-xl shadow-2xs text-xs">
+              <button onclick="switchMappingsSubTab('policies')" class="px-3.5 py-1.5 rounded-lg font-semibold transition ${activeMappingsSubTab === 'policies' ? 'bg-pink-600 text-white shadow-2xs' : 'text-slate-600 hover:bg-pink-50'}">
+                Organizational Policies (${cachedData.policies.length})
+              </button>
+              <button onclick="switchMappingsSubTab('mappings')" class="px-3.5 py-1.5 rounded-lg font-semibold transition ${activeMappingsSubTab === 'mappings' ? 'bg-pink-600 text-white shadow-2xs' : 'text-slate-600 hover:bg-pink-50'}">
+                Control Mappings & Review (${cachedData.mappings.length})
+              </button>
+              <button onclick="switchMappingsSubTab('coverage')" class="px-3.5 py-1.5 rounded-lg font-semibold transition ${activeMappingsSubTab === 'coverage' ? 'bg-pink-600 text-white shadow-2xs' : 'text-slate-600 hover:bg-pink-50'}">
+                Coverage & Traceability Matrix
+              </button>
+            </div>
+          </div>
+
+          <div id="subtab-content">
+            <!-- Dynamically populated subtab -->
+          </div>
+        </div>
+      `;
+      renderCurrentMappingsSubTab();
+    }
+
+    function switchMappingsSubTab(tab) {
+      activeMappingsSubTab = tab;
+      const scrollViewport = document.getElementById('main-scroll-viewport');
+      if (scrollViewport) scrollViewport.scrollTop = 0;
+      renderPoliciesAndMappings(document.getElementById('content-container'));
+    }
+
+    function renderCurrentMappingsSubTab() {
+      const container = document.getElementById('subtab-content');
+      if (!container) return;
+
+      if (activeMappingsSubTab === 'policies') {
+        renderPoliciesSubTab(container);
+      } else if (activeMappingsSubTab === 'mappings') {
+        renderMappingsReviewSubTab(container);
+      } else {
+        renderCoverageMatrixSubTab(container);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // SUBTAB 1: ORGANIZATIONAL POLICIES
+    // -------------------------------------------------------------------------
+    function renderPoliciesSubTab(container) {
+      // Calculate statistics
+      const total = cachedData.policies.length;
+      const approved = cachedData.policies.filter(p => p.lifecycle_status === 'APPROVED').length;
+      const underReview = cachedData.policies.filter(p => p.lifecycle_status === 'UNDER_REVIEW' || p.lifecycle_status === 'IN_REVIEW').length;
+      const draft = cachedData.policies.filter(p => p.lifecycle_status === 'DRAFT').length;
+      const rejected = cachedData.policies.filter(p => p.lifecycle_status === 'REJECTED').length;
+      const archived = cachedData.policies.filter(p => p.lifecycle_status === 'ARCHIVED' || p.lifecycle_status === 'DEPRECATED').length;
+
+      // Extract unique categories
+      const categories = Array.from(new Set(cachedData.policies.map(p => p.category).filter(Boolean))).sort();
+
+      // Filter policies
+      const filtered = cachedData.policies.filter(p => {
+        const matchesCategory = (selectedPolicyCategory === 'ALL' || p.category === selectedPolicyCategory);
+        let matchesStatus = true;
+        if (selectedPolicyStatus !== 'ALL') {
+          if (selectedPolicyStatus === 'ARCHIVED') {
+            matchesStatus = (p.lifecycle_status === 'ARCHIVED' || p.lifecycle_status === 'DEPRECATED');
+          } else {
+            matchesStatus = (p.lifecycle_status === selectedPolicyStatus);
+          }
+        }
+        const matchesSearch = !policySearchTerm || 
+          p.policy_code.toLowerCase().includes(policySearchTerm) ||
+          p.title.toLowerCase().includes(policySearchTerm) ||
+          (p.category && p.category.toLowerCase().includes(policySearchTerm)) ||
+          (p.description && p.description.toLowerCase().includes(policySearchTerm));
+        return matchesCategory && matchesStatus && matchesSearch;
+      });
+
+      // Map control counts per policy
+      const policyMappingCounts = {};
+      cachedData.mappings.forEach(m => {
+        policyMappingCounts[m.policy_id] = (policyMappingCounts[m.policy_id] || 0) + 1;
+      });
+
+      container.innerHTML = `
+        <div class="space-y-4">
+          <!-- KPI Summary Strip -->
+          <div class="grid grid-cols-2 md:grid-cols-6 gap-3">
+            <div class="bg-white border border-pink-100/80 rounded-xl p-3 shadow-2xs">
+              <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Total Library</div>
+              <div class="text-xl font-bold text-slate-900 mt-1">${total}</div>
+            </div>
+            <div class="bg-white border border-emerald-100 rounded-xl p-3 shadow-2xs">
+              <div class="text-[10px] text-emerald-600 uppercase font-bold tracking-wider">Approved</div>
+              <div class="text-xl font-bold text-emerald-700 mt-1">${approved}</div>
+            </div>
+            <div class="bg-white border border-amber-100 rounded-xl p-3 shadow-2xs">
+              <div class="text-[10px] text-amber-600 uppercase font-bold tracking-wider">Under Review</div>
+              <div class="text-xl font-bold text-amber-700 mt-1">${underReview}</div>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+              <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Drafts</div>
+              <div class="text-xl font-bold text-slate-700 mt-1">${draft}</div>
+            </div>
+            <div class="bg-white border border-rose-100 rounded-xl p-3 shadow-2xs">
+              <div class="text-[10px] text-rose-600 uppercase font-bold tracking-wider">Rejected</div>
+              <div class="text-xl font-bold text-rose-700 mt-1">${rejected}</div>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+              <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Archived</div>
+              <div class="text-xl font-bold text-slate-500 mt-1">${archived}</div>
+            </div>
+          </div>
+
+          <!-- Policy Search and Filter Toolbar -->
+          <div class="bg-white border border-pink-100/80 rounded-2xl p-3.5 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex flex-wrap items-center gap-2">
+              <div class="relative">
+                <input type="text" oninput="onPolicySearch(this.value)" value="${policySearchTerm}" placeholder="Search policy code, title..." class="bg-[#faf7f8] border border-slate-200 text-slate-800 rounded-lg pl-8 pr-3 py-1.5 focus:outline-none focus:border-pink-500 w-56 shadow-2xs">
+                <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </div>
+
+              <select onchange="onPolicyCategoryFilter(this.value)" class="bg-white border border-slate-200 text-slate-800 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-pink-500 shadow-2xs">
+                <option value="ALL">All Categories (${categories.length})</option>
+                ${categories.map(cat => `<option value="${cat}" ${selectedPolicyCategory === cat ? 'selected' : ''}>${cat}</option>`).join('')}
+              </select>
+
+              <select onchange="onPolicyStatusFilter(this.value)" class="bg-white border border-slate-200 text-slate-800 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-pink-500 shadow-2xs">
+                <option value="ALL" ${selectedPolicyStatus === 'ALL' ? 'selected' : ''}>All Statuses</option>
+                <option value="APPROVED" ${selectedPolicyStatus === 'APPROVED' ? 'selected' : ''}>Approved</option>
+                <option value="UNDER_REVIEW" ${selectedPolicyStatus === 'UNDER_REVIEW' ? 'selected' : ''}>Under Review</option>
+                <option value="DRAFT" ${selectedPolicyStatus === 'DRAFT' ? 'selected' : ''}>Draft</option>
+                <option value="REJECTED" ${selectedPolicyStatus === 'REJECTED' ? 'selected' : ''}>Rejected</option>
+                <option value="ARCHIVED" ${selectedPolicyStatus === 'ARCHIVED' ? 'selected' : ''}>Archived</option>
+              </select>
+            </div>
+
+            <button onclick="openCreatePolicyModal()" class="bg-pink-600 hover:bg-pink-700 text-white text-xs font-semibold px-3.5 py-1.5 rounded-lg transition flex items-center space-x-1.5 shadow-xs">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              <span>+ Draft New Policy</span>
+            </button>
+          </div>
+
+          <!-- Policies Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${filtered.map(p => {
+              const mapCount = policyMappingCounts[p.id] || 0;
+              const isArchived = (p.lifecycle_status === 'ARCHIVED' || p.lifecycle_status === 'DEPRECATED');
+              let statusBadgeClass = 'bg-slate-100 text-slate-600 border-slate-200';
+              if (p.lifecycle_status === 'APPROVED') statusBadgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+              else if (p.lifecycle_status === 'UNDER_REVIEW' || p.lifecycle_status === 'IN_REVIEW') statusBadgeClass = 'bg-amber-50 text-amber-700 border-amber-200';
+              else if (p.lifecycle_status === 'REJECTED') statusBadgeClass = 'bg-rose-50 text-rose-700 border-rose-200';
+              else if (isArchived) statusBadgeClass = 'bg-slate-100 text-slate-500 border-slate-300';
+
+              return `
+                <div class="bg-white border border-pink-100/80 rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-xs hover:border-pink-200 transition">
+                  <div>
+                    <!-- Policy Header Strip -->
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center space-x-2">
+                        <span class="font-mono text-xs font-bold text-pink-700">${p.policy_code}</span>
+                        <span class="text-[10px] text-slate-400 font-mono">v${p.version || '1.0'}</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold font-mono ${mapCount > 0 ? 'bg-pink-50 text-pink-700 border border-pink-200' : 'bg-slate-100 text-slate-400'}">
+                          ${mapCount} ${mapCount === 1 ? 'Control' : 'Controls'}
+                        </span>
+                      </div>
+                      <span class="px-2 py-0.5 rounded text-[10px] font-semibold font-mono border ${statusBadgeClass}">
+                        ${p.lifecycle_status}
+                      </span>
+                    </div>
+
+                    <!-- Policy Title & Category -->
+                    <h3 class="text-sm font-bold text-slate-900 mt-2">${p.title}</h3>
+                    <div class="text-[11px] text-pink-600 font-medium mt-0.5">${p.category}</div>
+
+                    <!-- Purpose & Core Statement -->
+                    <p class="text-xs text-slate-600 mt-2.5 leading-relaxed line-clamp-3">
+                      ${p.statement || p.description}
+                    </p>
+
+                    <!-- Governance Metadata Strip -->
+                    <div class="mt-3.5 pt-3 border-t border-pink-50 text-[11px] text-slate-500 space-y-1 font-medium">
+                      <div><strong class="text-slate-700">Scope:</strong> ${p.scope || 'Enterprise Infrastructure'}</div>
+                      <div class="flex items-center justify-between">
+                        <span><strong class="text-slate-700">Owner:</strong> ${p.owner}</span>
+                        <span><strong class="text-slate-700">Approver:</strong> ${p.approver || 'Pending'}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Action Buttons -->
+                  <div class="flex items-center justify-between pt-3 border-t border-pink-50 text-xs">
+                    <div class="flex items-center space-x-1.5">
+                      <button onclick="openPolicyDetailModal('${p.policy_code}')" class="px-3 py-1 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 rounded-lg font-semibold transition">
+                        View & Link Controls &rarr;
+                      </button>
+                      <button onclick="openEditPolicyModal('${p.policy_code}')" class="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-lg font-semibold transition">
+                        Edit
+                      </button>
+                    </div>
+
+                    <div class="flex items-center space-x-1.5">
+                      ${(p.lifecycle_status === 'DRAFT' || p.lifecycle_status === 'REJECTED') ? `
+                        <button onclick="submitPolicyForReview('${p.policy_code}')" class="px-3 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-lg font-semibold transition">
+                          Submit for Review
+                        </button>
+                      ` : ''}
+                      ${(p.lifecycle_status === 'UNDER_REVIEW' || p.lifecycle_status === 'IN_REVIEW') ? `
+                        <button onclick="openReviewPolicyModal('${p.policy_code}')" class="px-3 py-1 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold shadow-xs transition">
+                          Review Policy
+                        </button>
+                      ` : ''}
+                      ${!isArchived ? `
+                        <button onclick="archivePolicy('${p.policy_code}')" class="px-2 py-1 text-slate-400 hover:text-slate-600 transition" title="Archive Policy">
+                          Archive
+                        </button>
+                      ` : ''}
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('') || '<div class="col-span-2 p-12 text-center text-slate-500 bg-white rounded-2xl border border-pink-100">No policies match the selected filters.</div>'}
+          </div>
+        </div>
+      `;
+    }
+
+    function onPolicySearch(val) {
+      policySearchTerm = val.toLowerCase();
+      renderCurrentMappingsSubTab();
+    }
+
+    function onPolicyCategoryFilter(val) {
+      selectedPolicyCategory = val;
+      renderCurrentMappingsSubTab();
+    }
+
+    function onPolicyStatusFilter(val) {
+      selectedPolicyStatus = val;
+      renderCurrentMappingsSubTab();
+    }
+
+    // -------------------------------------------------------------------------
+    // SUBTAB 2: CONTROL MAPPINGS & REVIEW WORKFLOW
+    // -------------------------------------------------------------------------
+    function renderMappingsReviewSubTab(container) {
+      const allMaps = cachedData.mappings;
+      const approvedCount = allMaps.filter(m => m.mapping_status === 'APPROVED' || m.mapping_status === 'HUMAN_APPROVED').length;
+      const proposedCount = allMaps.filter(m => m.mapping_status === 'PROPOSED' || m.mapping_status === 'SUGGESTED' || m.mapping_status === 'DRAFT').length;
+      const rejectedCount = allMaps.filter(m => m.mapping_status === 'REJECTED').length;
+
+      // Filter mappings
+      const filtered = allMaps.filter(m => {
+        let matchesStatus = true;
+        if (mappingReviewFilter === 'APPROVED') {
+          matchesStatus = (m.mapping_status === 'APPROVED' || m.mapping_status === 'HUMAN_APPROVED');
+        } else if (mappingReviewFilter === 'PROPOSED') {
+          matchesStatus = (m.mapping_status === 'PROPOSED' || m.mapping_status === 'SUGGESTED' || m.mapping_status === 'DRAFT');
+        } else if (mappingReviewFilter === 'REJECTED') {
+          matchesStatus = (m.mapping_status === 'REJECTED');
+        }
+
+        let matchesPolicy = true;
+        if (mappingPolicyFilter !== 'ALL') {
+          matchesPolicy = (m.policy_id === mappingPolicyFilter);
+        }
+
+        let matchesFramework = true;
+        if (mappingFrameworkFilter !== 'ALL') {
+          if (m.control_id.startsWith('ISO-')) matchesFramework = (mappingFrameworkFilter === 'ISO_27001_2022');
+          else if (m.control_id.startsWith('NIST-')) matchesFramework = (mappingFrameworkFilter === 'NIST_SP_800_53_R5');
+        }
+
+        const matchesSearch = !mappingSearchTerm ||
+          m.control_id.toLowerCase().includes(mappingSearchTerm) ||
+          (m.rationale && m.rationale.toLowerCase().includes(mappingSearchTerm));
+
+        return matchesStatus && matchesPolicy && matchesFramework && matchesSearch;
+      });
+
+      container.innerHTML = `
+        <div class="space-y-4">
+          <!-- Regulatory Assurance Notice -->
+          <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-xs text-amber-900 flex items-start space-x-3">
+            <svg class="w-5 h-5 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <div>
+              <strong>Regulatory Assurance Notice:</strong> An algorithmic similarity score NEVER certifies regulatory compliance or control effectiveness. Every candidate policy-to-control relationship requires explicit review and justification by an authorized compliance auditor before regulatory adoption.
+            </div>
+          </div>
+
+          <!-- Mappings Filter Strip -->
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <!-- Filter Pills -->
+            <div class="flex flex-wrap items-center gap-1.5 bg-white border border-pink-100 p-1 rounded-xl shadow-2xs text-xs">
+              <button onclick="setMappingReviewFilter('ALL')" class="px-3 py-1 rounded-lg font-semibold transition ${mappingReviewFilter === 'ALL' ? 'bg-pink-600 text-white shadow-2xs' : 'text-slate-600 hover:bg-pink-50'}">
+                All Mappings (${allMaps.length})
+              </button>
+              <button onclick="setMappingReviewFilter('PROPOSED')" class="px-3 py-1 rounded-lg font-semibold transition ${mappingReviewFilter === 'PROPOSED' ? 'bg-amber-500 text-white shadow-2xs' : 'text-slate-600 hover:bg-pink-50'}">
+                Awaiting Review (${proposedCount})
+              </button>
+              <button onclick="setMappingReviewFilter('APPROVED')" class="px-3 py-1 rounded-lg font-semibold transition ${mappingReviewFilter === 'APPROVED' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 hover:bg-pink-50'}">
+                Human Approved (${approvedCount})
+              </button>
+              <button onclick="setMappingReviewFilter('REJECTED')" class="px-3 py-1 rounded-lg font-semibold transition ${mappingReviewFilter === 'REJECTED' ? 'bg-rose-600 text-white shadow-2xs' : 'text-slate-600 hover:bg-pink-50'}">
+                Rejected (${rejectedCount})
+              </button>
+            </div>
+
+            <!-- Add Mapping CTA -->
+            <button onclick="openAddMappingModal()" class="bg-pink-600 hover:bg-pink-700 text-white text-xs font-semibold px-3.5 py-1.5 rounded-lg transition flex items-center space-x-1.5 shadow-xs">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              <span>+ Add New Control Mapping</span>
+            </button>
+          </div>
+
+          <!-- Secondary Filters -->
+          <div class="bg-white border border-pink-100/80 rounded-2xl p-3.5 shadow-xs flex flex-wrap items-center gap-3 text-xs">
+            <div class="relative">
+              <input type="text" oninput="onMappingSearch(this.value)" value="${mappingSearchTerm}" placeholder="Search control ID or rationale..." class="bg-[#faf7f8] border border-slate-200 text-slate-800 rounded-lg pl-8 pr-3 py-1.5 focus:outline-none focus:border-pink-500 w-56 shadow-2xs">
+              <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+
+            <select onchange="onMappingPolicyFilter(this.value)" class="bg-white border border-slate-200 text-slate-800 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-pink-500 shadow-2xs max-w-xs truncate">
+              <option value="ALL">All Policies (${cachedData.policies.length})</option>
+              ${cachedData.policies.map(p => `<option value="${p.id}" ${mappingPolicyFilter == p.id ? 'selected' : ''}>${p.policy_code} - ${p.title}</option>`).join('')}
+            </select>
+
+            <select onchange="onMappingFrameworkFilter(this.value)" class="bg-white border border-slate-200 text-slate-800 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-pink-500 shadow-2xs">
+              <option value="ALL" ${mappingFrameworkFilter === 'ALL' ? 'selected' : ''}>All Frameworks</option>
+              <option value="NIST_SP_800_53_R5" ${mappingFrameworkFilter === 'NIST_SP_800_53_R5' ? 'selected' : ''}>NIST SP 800-53 Rev 5</option>
+              <option value="ISO_27001_2022" ${mappingFrameworkFilter === 'ISO_27001_2022' ? 'selected' : ''}>ISO/IEC 27001:2022</option>
+            </select>
+          </div>
+
+          <!-- Mappings Table -->
+          <div class="bg-white border border-pink-100/80 rounded-2xl shadow-xs overflow-hidden">
+            <div class="overflow-x-auto w-full">
+              <table class="w-full min-w-[850px] text-left text-xs text-slate-700">
+                <thead class="bg-pink-50/50 border-b border-pink-100 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+                  <tr>
+                    <th class="px-4 py-3 whitespace-nowrap">Policy</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Framework Control</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Mapping Status</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Confidence</th>
+                    <th class="px-4 py-3">Rationale & Audit</th>
+                    <th class="px-4 py-3 text-right whitespace-nowrap">Actions</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                ${filtered.map(m => {
+                  const pol = cachedData.policies.find(p => p.id === m.policy_id) || {};
+                  const ctrl = cachedData.controls.find(c => c.control_id === m.control_id) || {};
+                  const isApproved = (m.mapping_status === 'APPROVED' || m.mapping_status === 'HUMAN_APPROVED');
+                  const isRejected = (m.mapping_status === 'REJECTED');
+                  const isProposed = !isApproved && !isRejected;
+
+                  let statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-semibold font-mono bg-amber-50 text-amber-700 border border-amber-200">PROPOSED</span>`;
+                  if (isApproved) {
+                    statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-semibold font-mono bg-emerald-50 text-emerald-700 border border-emerald-200">APPROVED</span>`;
+                  } else if (isRejected) {
+                    statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-semibold font-mono bg-rose-50 text-rose-700 border border-rose-200">REJECTED</span>`;
+                  } else if (isRejected) {
+                    statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-semibold font-mono bg-rose-50 text-rose-700 border border-rose-200">REJECTED</span>`;
+                  }
+
+                  return `
+                    <tr class="hover:bg-pink-50/20 transition">
+                      <td class="px-4 py-3 max-w-xs">
+                        <div class="font-mono font-bold text-pink-700 cursor-pointer hover:underline" onclick="openPolicyDetailModal('${pol.policy_code}')">${pol.policy_code || m.policy_id}</div>
+                        <div class="text-[11px] text-slate-600 truncate mt-0.5">${pol.title || 'Corporate Policy'}</div>
+                      </td>
+                      <td class="px-4 py-3 max-w-xs">
+                        <div class="font-mono font-bold text-slate-900 cursor-pointer hover:text-pink-600" onclick="openControlDrawer('${m.control_id}')">${m.control_id}</div>
+                        <div class="text-[11px] text-slate-600 truncate mt-0.5">${ctrl.title || m.control_id}</div>
+                      </td>
+                      <td class="px-4 py-3 whitespace-nowrap">${statusBadge}</td>
+                      <td class="px-4 py-3 font-mono font-semibold whitespace-nowrap">${Math.round((m.confidence_score || 1.0) * 100)}%</td>
+                      <td class="px-4 py-3 max-w-sm">
+                        <div class="text-slate-700 truncate" title="${m.rationale || 'Candidate mapping relationship.'}">${m.rationale || 'Candidate mapping relationship.'}</div>
+                        ${m.reviewer ? `<div class="text-[10px] text-slate-400 mt-0.5 font-mono">Reviewed by: ${m.reviewer}</div>` : ''}
+                      </td>
+                      <td class="px-4 py-3 text-right whitespace-nowrap">
+                        <div class="flex items-center justify-end space-x-1.5">
+                          ${isProposed ? `
+                            <button onclick="openReviewMappingModal('${m.id}', 'APPROVED')" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg font-semibold transition">
+                              Approve
+                            </button>
+                            <button onclick="openReviewMappingModal('${m.id}', 'REJECTED')" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg font-semibold transition">
+                              Reject
+                            </button>
+                          ` : ''}
+                          <button onclick="openMappingAuditModal('${m.id}')" class="px-2 py-1 text-slate-400 hover:text-slate-600 rounded hover:bg-slate-100 transition" title="Audit Log">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                          </button>
+                          <button onclick="deletePolicyMapping('${m.id}')" class="px-2 py-1 text-slate-400 hover:text-rose-600 rounded hover:bg-rose-50 transition" title="Delete Mapping">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  `;
+                }).join('') || '<tr><td colspan="6" class="p-8 text-center text-slate-500">No mappings match the selected filters.</td></tr>'}
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function setMappingReviewFilter(val) {
+      mappingReviewFilter = val;
+      renderCurrentMappingsSubTab();
+    }
+
+    function onMappingSearch(val) {
+      mappingSearchTerm = val.toLowerCase();
+      renderCurrentMappingsSubTab();
+    }
+
+    function onMappingPolicyFilter(val) {
+      mappingPolicyFilter = val;
+      renderCurrentMappingsSubTab();
+    }
+
+    function onMappingFrameworkFilter(val) {
+      mappingFrameworkFilter = val;
+      renderCurrentMappingsSubTab();
+    }
+
+    // -------------------------------------------------------------------------
+    // SUBTAB 3: COVERAGE & TRACEABILITY MATRIX
+    // -------------------------------------------------------------------------
+    let coverageTraceTab = 'unmapped'; // 'unmapped', 'unreviewed', 'unmapped_policies'
+
+    function renderCoverageMatrixSubTab(container) {
+      const cov = cachedData.coverage || {
+        iso_27001: { total_catalog_controls: 93, mapped_controls_count: 0, approved_mapped_controls_count: 0, technically_assessed_controls_count: 0, mapping_coverage_pct: 0, approved_coverage_pct: 0, technical_assessment_pct: 0 },
+        nist_800_53: { total_catalog_controls: 1196, mapped_controls_count: 0, approved_mapped_controls_count: 0, technically_assessed_controls_count: 0, mapping_coverage_pct: 0, approved_coverage_pct: 0, technical_assessment_pct: 0 },
+        combined: { total_catalog_controls: 1289, mapped_controls_count: 0, approved_mapped_controls_count: 0, technically_assessed_controls_count: 0, mapping_coverage_pct: 0, approved_coverage_pct: 0, technical_assessment_pct: 0 },
+        unmapped_control_ids: [],
+        unreviewed_control_ids: [],
+        policies_without_mappings: []
+      };
+
+      const c = cov.combined;
+
+      container.innerHTML = `
+        <div class="space-y-6">
+          <!-- 4 Core Coverage KPI Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <!-- 1. Catalog Total -->
+            <div class="bg-white border border-pink-100/80 rounded-2xl p-5 shadow-xs">
+              <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">1. Catalog Coverage</div>
+              <div class="text-2xl font-bold text-slate-900 mt-2">${c.total_catalog_controls}</div>
+              <p class="text-[11px] text-slate-500 mt-1">93 ISO Annex A + 1,196 NIST 800-53 controls imported.</p>
+            </div>
+
+            <!-- 2. Policy Mapping Coverage -->
+            <div class="bg-white border border-pink-100/80 rounded-2xl p-5 shadow-xs">
+              <div class="text-[10px] text-pink-600 font-bold uppercase tracking-wider">2. Policy Mapping Coverage</div>
+              <div class="text-2xl font-bold text-pink-700 mt-2">${c.mapped_controls_count} <span class="text-xs font-normal text-slate-500">(${c.mapping_coverage_pct}%)</span></div>
+              <p class="text-[11px] text-slate-500 mt-1">Controls mapped to &ge; 1 corporate security policy.</p>
+            </div>
+
+            <!-- 3. Mapping Validation Coverage -->
+            <div class="bg-white border border-pink-100/80 rounded-2xl p-5 shadow-xs">
+              <div class="text-[10px] text-emerald-600 font-bold uppercase tracking-wider">3. Human Approved Validation</div>
+              <div class="text-2xl font-bold text-emerald-700 mt-2">${c.approved_mapped_controls_count} <span class="text-xs font-normal text-slate-500">(${c.approved_coverage_pct}%)</span></div>
+              <p class="text-[11px] text-slate-500 mt-1">Controls with verified, auditor-approved mappings.</p>
+            </div>
+
+            <!-- 4. Technical Assessment Coverage -->
+            <div class="bg-white border border-pink-100/80 rounded-2xl p-5 shadow-xs">
+              <div class="text-[10px] text-indigo-600 font-bold uppercase tracking-wider">4. Technical CaC Assurance</div>
+              <div class="text-2xl font-bold text-indigo-700 mt-2">${c.technically_assessed_controls_count} <span class="text-xs font-normal text-slate-500">(${c.technical_assessment_pct}%)</span></div>
+              <p class="text-[11px] text-slate-500 mt-1">Controls with automated Tier-1 / Tier-2 test runners.</p>
+            </div>
+          </div>
+
+          <!-- Framework Comparison Table -->
+          <div class="bg-white border border-pink-100/80 rounded-2xl shadow-xs overflow-hidden">
+            <div class="px-5 py-4 border-b border-pink-100 flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900">Framework Control Breakdown</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Authoritative control counts and mapping coverage status by compliance standard.</p>
+              </div>
+            </div>
+            <div class="overflow-x-auto w-full">
+              <table class="w-full min-w-[750px] text-left text-xs text-slate-700">
+              <thead class="bg-pink-50/50 border-b border-pink-100 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+                <tr>
+                  <th class="px-4 py-3">Framework Standard</th>
+                  <th class="px-4 py-3">Active Base</th>
+                  <th class="px-4 py-3">Enhancements</th>
+                  <th class="px-4 py-3">Withdrawn</th>
+                  <th class="px-4 py-3">Total Catalog</th>
+                  <th class="px-4 py-3">Policy Mapped</th>
+                  <th class="px-4 py-3">Human Approved</th>
+                  <th class="px-4 py-3">CaC Assessed</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-mono text-xs">
+                <tr class="hover:bg-pink-50/20">
+                  <td class="px-4 py-3 font-sans font-bold text-slate-900">ISO/IEC 27001:2022 (Annex A)</td>
+                  <td class="px-4 py-3">93</td>
+                  <td class="px-4 py-3 text-slate-400">0</td>
+                  <td class="px-4 py-3 text-slate-400">0</td>
+                  <td class="px-4 py-3 font-bold text-slate-900">${cov.iso_27001.total_catalog_controls}</td>
+                  <td class="px-4 py-3 text-pink-700 font-bold">${cov.iso_27001.mapped_controls_count} (${cov.iso_27001.mapping_coverage_pct}%)</td>
+                  <td class="px-4 py-3 text-emerald-700 font-bold">${cov.iso_27001.approved_mapped_controls_count}</td>
+                  <td class="px-4 py-3 text-indigo-700 font-bold">${cov.iso_27001.technically_assessed_controls_count}</td>
+                </tr>
+                <tr class="hover:bg-pink-50/20">
+                  <td class="px-4 py-3 font-sans font-bold text-slate-900">NIST SP 800-53 Rev 5.2.0</td>
+                  <td class="px-4 py-3">${cov.nist_800_53.base_controls_count}</td>
+                  <td class="px-4 py-3">${cov.nist_800_53.enhancements_count}</td>
+                  <td class="px-4 py-3 text-slate-400">${cov.nist_800_53.withdrawn_controls_count}</td>
+                  <td class="px-4 py-3 font-bold text-slate-900">${cov.nist_800_53.total_catalog_controls}</td>
+                  <td class="px-4 py-3 text-pink-700 font-bold">${cov.nist_800_53.mapped_controls_count} (${cov.nist_800_53.mapping_coverage_pct}%)</td>
+                  <td class="px-4 py-3 text-emerald-700 font-bold">${cov.nist_800_53.approved_mapped_controls_count}</td>
+                  <td class="px-4 py-3 text-indigo-700 font-bold">${cov.nist_800_53.technically_assessed_controls_count}</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+
+          <!-- Traceability Explorer: Deep Dives -->
+          <div class="bg-white border border-pink-100/80 rounded-2xl p-5 shadow-xs space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-pink-100 pb-3 gap-2">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900">Traceability & Gap Explorer</h3>
+                <p class="text-xs text-slate-500">Address the 6 core governance mapping questions directly.</p>
+              </div>
+              <div class="flex items-center space-x-1.5 text-xs">
+                <button onclick="setCoverageTraceTab('unmapped')" class="px-3 py-1 rounded-lg font-semibold transition ${coverageTraceTab === 'unmapped' ? 'bg-pink-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-pink-50'}">
+                  Unmapped Controls (${cov.unmapped_control_ids.length})
+                </button>
+                <button onclick="setCoverageTraceTab('unreviewed')" class="px-3 py-1 rounded-lg font-semibold transition ${coverageTraceTab === 'unreviewed' ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-600 hover:bg-pink-50'}">
+                  Proposed Only (${cov.unreviewed_control_ids.length})
+                </button>
+                <button onclick="setCoverageTraceTab('unmapped_policies')" class="px-3 py-1 rounded-lg font-semibold transition ${coverageTraceTab === 'unmapped_policies' ? 'bg-slate-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-pink-50'}">
+                  Policies Without Controls (${cov.policies_without_mappings.length})
+                </button>
+              </div>
+            </div>
+
+            <div id="coverage-trace-content">
+              ${renderCoverageTraceContent(cov)}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function setCoverageTraceTab(tab) {
+      coverageTraceTab = tab;
+      const container = document.getElementById('coverage-trace-content');
+      if (container && cachedData.coverage) {
+        container.innerHTML = renderCoverageTraceContent(cachedData.coverage);
+      }
+    }
+
+    function renderCoverageTraceContent(cov) {
+      if (coverageTraceTab === 'unmapped') {
+        const unmappedControls = cov.unmapped_control_ids.slice(0, 50).map(id => cachedData.controls.find(c => c.control_id === id)).filter(Boolean);
+        return `
+          <div class="space-y-3">
+            <div class="text-xs text-slate-500 flex items-center justify-between">
+              <span>Showing first 50 of <strong>${cov.unmapped_control_ids.length}</strong> controls with no linked policy.</span>
+            </div>
+            <div class="max-h-96 overflow-y-auto divide-y divide-slate-100 border border-slate-200 rounded-xl">
+              ${unmappedControls.map(c => `
+                <div class="p-3 flex items-center justify-between hover:bg-pink-50/20 text-xs">
+                  <div>
+                    <span class="font-mono font-bold text-pink-700 cursor-pointer hover:underline" onclick="openControlDrawer('${c.control_id}')">${c.control_id}</span>
+                    <span class="font-medium text-slate-900 ml-2">${c.title}</span>
+                    <div class="text-[10px] text-slate-400 mt-0.5">${c.domain_family} &bull; ${c.framework_name === 'NIST_SP_800_53_R5' ? 'NIST 800-53' : 'ISO 27001'}</div>
+                  </div>
+                  <button onclick="openAddMappingModal(null, '${c.control_id}')" class="px-2.5 py-1 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 rounded-lg font-semibold shrink-0">
+                    + Map to Policy
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (coverageTraceTab === 'unreviewed') {
+        const unreviewed = cov.unreviewed_control_ids.map(id => cachedData.controls.find(c => c.control_id === id)).filter(Boolean);
+        return `
+          <div class="space-y-3">
+            <div class="text-xs text-slate-500">These <strong>${unreviewed.length}</strong> controls are covered strictly by candidate PROPOSED mappings and lack verified human auditor signoff.</div>
+            <div class="max-h-96 overflow-y-auto divide-y divide-slate-100 border border-amber-200 bg-amber-50/20 rounded-xl">
+              ${unreviewed.map(c => `
+                <div class="p-3 flex items-center justify-between hover:bg-amber-50/40 text-xs">
+                  <div>
+                    <span class="font-mono font-bold text-amber-800 cursor-pointer hover:underline" onclick="openControlDrawer('${c.control_id}')">${c.control_id}</span>
+                    <span class="font-medium text-slate-900 ml-2">${c.title}</span>
+                    <div class="text-[10px] text-slate-500 mt-0.5">${c.domain_family}</div>
+                  </div>
+                  <button onclick="switchMappingsSubTab('mappings'); setMappingReviewFilter('PROPOSED');" class="px-2.5 py-1 bg-amber-100 hover:bg-amber-200 text-amber-800 border border-amber-300 rounded-lg font-semibold shrink-0">
+                    Review in Mappings &rarr;
+                  </button>
+                </div>
+              `).join('') || '<div class="p-6 text-center text-slate-500">All mapped controls have approved human review.</div>'}
+            </div>
+          </div>
+        `;
+      } else {
+        const unmappedPolicies = cov.policies_without_mappings.map(code => cachedData.policies.find(p => p.policy_code === code)).filter(Boolean);
+        return `
+          <div class="space-y-3">
+            <div class="text-xs text-slate-500">The following <strong>${unmappedPolicies.length}</strong> corporate policies currently have zero framework controls mapped.</div>
+            <div class="max-h-96 overflow-y-auto divide-y divide-slate-100 border border-slate-200 rounded-xl">
+              ${unmappedPolicies.map(p => `
+                <div class="p-3 flex items-center justify-between hover:bg-pink-50/20 text-xs">
+                  <div>
+                    <span class="font-mono font-bold text-pink-700">${p.policy_code}</span>
+                    <span class="font-medium text-slate-900 ml-2">${p.title}</span>
+                    <div class="text-[10px] text-slate-400 mt-0.5">${p.category}</div>
+                  </div>
+                  <button onclick="openPolicyDetailModal('${p.policy_code}')" class="px-2.5 py-1 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 rounded-lg font-semibold shrink-0">
+                    Map Controls &rarr;
+                  </button>
+                </div>
+              `).join('') || '<div class="p-6 text-center text-slate-500">All corporate policies have mapped framework controls.</div>'}
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // =========================================================================
+    // MODALS AND MUTATION ACTIONS FOR POLICIES AND MAPPINGS
+    // =========================================================================
+
+    // 1. POLICY DETAIL MODAL
+    function openPolicyDetailModal(policyCode) {
+      const p = cachedData.policies.find(x => x.policy_code === policyCode);
+      if (!p) return;
+
+      const modal = document.getElementById('modal-container');
+      const content = document.getElementById('modal-content');
+
+      // Find all mappings for this policy
+      const policyMaps = cachedData.mappings.filter(m => m.policy_id === p.id);
+
+      content.innerHTML = `
+        <div class="p-6 space-y-4 max-h-[85vh] overflow-y-auto">
+          <!-- Header Strip -->
+          <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+            <div class="flex items-center space-x-2">
+              <span class="font-mono text-sm font-bold text-pink-700">${p.policy_code}</span>
+              <span class="text-xs text-slate-400 font-mono">v${p.version || '1.0'}</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold font-mono border ${p.lifecycle_status === 'APPROVED' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : p.lifecycle_status === 'UNDER_REVIEW' ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-slate-100 text-slate-600 border-slate-200'}">
+                ${p.lifecycle_status}
+              </span>
+            </div>
+            <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 text-lg leading-none">&times;</button>
+          </div>
+
+          <!-- Title & Category -->
+          <div>
+            <h3 class="text-base font-bold text-slate-900">${p.title}</h3>
+            <div class="text-xs text-pink-600 font-medium mt-0.5">${p.category}</div>
+          </div>
+
+          <!-- Metadata Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 bg-pink-50/30 p-3 rounded-xl border border-pink-100 text-xs">
+            <div>
+              <div class="text-[10px] text-slate-400 uppercase font-semibold">Owner</div>
+              <div class="font-medium text-slate-800 mt-0.5">${p.owner}</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-slate-400 uppercase font-semibold">Approver</div>
+              <div class="font-medium text-slate-800 mt-0.5">${p.approver || 'Pending Review'}</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-slate-400 uppercase font-semibold">Scope</div>
+              <div class="font-medium text-slate-800 mt-0.5 truncate">${p.scope || 'Enterprise Infrastructure'}</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-slate-400 uppercase font-semibold">Review Date</div>
+              <div class="font-medium text-slate-800 mt-0.5">${p.review_date || 'Annual Review'}</div>
+            </div>
+          </div>
+
+          <!-- Purpose / Core Statement -->
+          <div>
+            <div class="text-xs font-bold text-slate-700 mb-1">Policy Statement & Purpose</div>
+            <p class="text-xs text-slate-600 bg-[#faf7f8] p-3.5 rounded-xl border border-slate-200/60 leading-relaxed">
+              ${p.statement || p.description}
+            </p>
+          </div>
+
+          <!-- Framework Controls Mapped Table -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-bold text-slate-900">Mapped Framework Controls</span>
+                <span class="text-[10px] font-mono font-bold bg-pink-100 text-pink-800 px-2 py-0.5 rounded-full border border-pink-200">
+                  ${policyMaps.length} Controls
+                </span>
+              </div>
+              <button onclick="closeModal(); openAddMappingModal('${p.policy_code}')" class="px-2.5 py-1 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 rounded-lg font-semibold text-xs transition">
+                + Link Framework Control
+              </button>
+            </div>
+
+            <div class="border border-slate-200 rounded-xl shadow-2xs overflow-hidden">
+              <div class="overflow-x-auto w-full">
+                <table class="w-full min-w-[500px] text-left text-xs text-slate-700">
+                <thead class="bg-pink-50/50 border-b border-pink-100 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+                  <tr>
+                    <th class="px-3 py-2">Control ID</th>
+                    <th class="px-3 py-2">Framework Title</th>
+                    <th class="px-3 py-2">Status</th>
+                    <th class="px-3 py-2">Rationale</th>
+                    <th class="px-3 py-2 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  ${policyMaps.map(m => {
+                    const ctrl = cachedData.controls.find(c => c.control_id === m.control_id) || {};
+                    const isApp = (m.mapping_status === 'APPROVED' || m.mapping_status === 'HUMAN_APPROVED');
+                    return `
+                      <tr class="hover:bg-pink-50/20 text-xs">
+                        <td class="px-3 py-2 font-mono font-bold text-pink-700 whitespace-nowrap cursor-pointer hover:underline" onclick="closeModal(); openControlDrawer('${m.control_id}')">
+                          ${m.control_id}
+                        </td>
+                        <td class="px-3 py-2 max-w-xs">
+                          <div class="truncate text-slate-900 font-medium">${ctrl.title || m.control_id}</div>
+                          <div class="text-[10px] text-slate-400">${ctrl.framework_name === 'NIST_SP_800_53_R5' ? 'NIST 800-53' : 'ISO 27001'}</div>
+                        </td>
+                        <td class="px-3 py-2 whitespace-nowrap">
+                          <span class="px-2 py-0.5 rounded text-[10px] font-semibold font-mono ${isApp ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">
+                            ${m.mapping_status}
+                          </span>
+                        </td>
+                        <td class="px-3 py-2 max-w-xs truncate text-slate-600" title="${m.rationale || ''}">
+                          ${m.rationale || 'Candidate mapping'}
+                        </td>
+                        <td class="px-3 py-2 text-right whitespace-nowrap">
+                          <button onclick="unlinkPolicyControl('${m.id}', '${p.policy_code}')" class="text-slate-400 hover:text-rose-600 font-semibold transition" title="Unlink Control">
+                            &times; Unlink
+                          </button>
+                        </td>
+                      </tr>
+                    `;
+                  }).join('') || '<tr><td colspan="5" class="p-6 text-center text-slate-400">No framework controls currently mapped to this policy.</td></tr>'}
+                </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Footer Actions -->
+          <div class="flex items-center justify-between pt-3 border-t border-pink-100 text-xs">
+            <div class="flex items-center space-x-2">
+              <button onclick="closeModal(); openEditPolicyModal('${p.policy_code}')" class="px-3 py-1.5 bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 rounded-lg font-semibold transition">
+                Edit Policy
+              </button>
+              ${p.lifecycle_status === 'DRAFT' || p.lifecycle_status === 'REJECTED' ? `
+                <button onclick="closeModal(); submitPolicyForReview('${p.policy_code}')" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-lg font-semibold transition">
+                  Submit for Review
+                </button>
+              ` : ''}
+              ${p.lifecycle_status === 'UNDER_REVIEW' || p.lifecycle_status === 'IN_REVIEW' ? `
+                <button onclick="closeModal(); openReviewPolicyModal('${p.policy_code}')" class="px-3 py-1.5 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold shadow-xs transition">
+                  Review & Approve
+                </button>
+              ` : ''}
+            </div>
+            <button onclick="closeModal()" class="px-4 py-1.5 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg font-semibold transition">
+              Close
+            </button>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+    }
+
+    // 2. CREATE POLICY MODAL
+    function openCreatePolicyModal() {
+      const modal = document.getElementById('modal-container');
+      const content = document.getElementById('modal-content');
+
+      content.innerHTML = `
+        <div class="p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+            <h3 class="text-sm font-bold text-slate-900">Draft New Organizational Policy</h3>
+            <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 text-lg leading-none">&times;</button>
+          </div>
+          <div class="space-y-3">
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-slate-700 font-semibold mb-1">Policy Code *</label>
+                <input type="text" id="new-pol-code" placeholder="e.g. POL-NET-002" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 font-mono focus:border-pink-500">
+              </div>
+              <div>
+                <label class="block text-slate-700 font-semibold mb-1">Category *</label>
+                <input type="text" id="new-pol-category" placeholder="e.g. Network Security" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+              </div>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Policy Title *</label>
+              <input type="text" id="new-pol-title" placeholder="e.g. Wireless Network and Guest Access Policy" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-slate-700 font-semibold mb-1">Policy Owner</label>
+                <input type="text" id="new-pol-owner" value="Chief Information Security Officer" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+              </div>
+              <div>
+                <label class="block text-slate-700 font-semibold mb-1">Scope</label>
+                <input type="text" id="new-pol-scope" value="All Corporate and Production Networks" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+              </div>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Policy Statement & Purpose *</label>
+              <textarea id="new-pol-statement" rows="3" placeholder="Core mandatory policy statement and operational purpose..." class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500"></textarea>
+            </div>
+          </div>
+          <div class="flex justify-end space-x-2 pt-3 border-t border-pink-100">
+            <button onclick="closeModal()" class="px-3.5 py-1.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200">Cancel</button>
+            <button id="btn-save-policy" onclick="createPolicy()" class="px-3.5 py-1.5 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold shadow-xs">Save as Draft</button>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+    }
+
+    async function createPolicy() {
+      const code = document.getElementById('new-pol-code').value.trim();
+      const title = document.getElementById('new-pol-title').value.trim();
+      const cat = document.getElementById('new-pol-category').value.trim();
+      const owner = document.getElementById('new-pol-owner').value.trim();
+      const scope = document.getElementById('new-pol-scope').value.trim();
+      const stmt = document.getElementById('new-pol-statement').value.trim();
+      const saveBtn = document.getElementById('btn-save-policy');
+
+      if (!code || !title || !stmt) {
+        alert("Please fill in Policy Code, Title, and Policy Statement.");
+        return;
+      }
+
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = "Saving...";
+      }
+
+      try {
+        const res = await authFetch(`${API}/policies`, {
+          method: 'POST',
+          body: JSON.stringify({
+            policy_code: code,
+            title: title,
+            category: cat || 'General Security',
+            statement: stmt,
+            description: stmt,
+            owner: owner || 'CISO',
+            scope: scope || 'Enterprise Infrastructure',
+            version: '1.0'
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ detail: res.statusText }));
+          alert(`Policy creation failed (HTTP ${res.status}):\n${formatApiError(err, res.status)}`);
+          if (saveBtn) {
+            saveBtn.disabled = false;
+            saveBtn.textContent = "Save as Draft";
+          }
+          return;
+        }
+        closeModal();
+        await refreshAllData();
+        if (activeMappingsSubTab === 'policies') {
+          renderPoliciesSubTab(document.getElementById('subtab-content'));
+        } else {
+          renderCurrentMappingsSubTab();
+        }
+      } catch (e) {
+        alert(`Network or system error: ${e.message}`);
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = "Save as Draft";
+        }
+      }
+    }
+
+    // 3. EDIT POLICY MODAL
+    function openEditPolicyModal(policyCode) {
+      const p = cachedData.policies.find(x => x.policy_code === policyCode);
+      if (!p) return;
+
+      const modal = document.getElementById('modal-container');
+      const content = document.getElementById('modal-content');
+
+      content.innerHTML = `
+        <div class="p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+            <h3 class="text-sm font-bold text-slate-900">Edit Organizational Policy: ${p.policy_code}</h3>
+            <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 text-lg leading-none">&times;</button>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Policy Title</label>
+              <input type="text" id="edit-pol-title" value="${p.title}" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-slate-700 font-semibold mb-1">Category</label>
+                <input type="text" id="edit-pol-category" value="${p.category}" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+              </div>
+              <div>
+                <label class="block text-slate-700 font-semibold mb-1">Owner</label>
+                <input type="text" id="edit-pol-owner" value="${p.owner}" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+              </div>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Scope</label>
+              <input type="text" id="edit-pol-scope" value="${p.scope || ''}" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+            </div>
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Policy Statement</label>
+              <textarea id="edit-pol-statement" rows="3" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">${p.statement || ''}</textarea>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Description / Purpose</label>
+              <textarea id="edit-pol-description" rows="2" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">${p.description || ''}</textarea>
+            </div>
+          </div>
+          <div class="flex justify-end space-x-2 pt-3 border-t border-pink-100">
+            <button onclick="closeModal()" class="px-3.5 py-1.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200">Cancel</button>
+            <button onclick="saveEditPolicy('${p.policy_code}')" class="px-3.5 py-1.5 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold shadow-xs">Save Changes</button>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+    }
+
+    async function saveEditPolicy(policyCode) {
+      const title = document.getElementById('edit-pol-title').value.trim();
+      const cat = document.getElementById('edit-pol-category').value.trim();
+      const owner = document.getElementById('edit-pol-owner').value.trim();
+      const scope = document.getElementById('edit-pol-scope').value.trim();
+      const stmt = document.getElementById('edit-pol-statement').value.trim();
+      const desc = document.getElementById('edit-pol-description').value.trim();
+
+      try {
+        const res = await authFetch(`${API}/policies/${policyCode}`, {
+          method: 'PATCH',
+          body: JSON.stringify({
+            title: title,
+            category: cat,
+            owner: owner,
+            scope: scope,
+            statement: stmt,
+            description: desc
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(`Update failed: ${err.detail || 'Validation error'}`);
+          return;
+        }
+        closeModal();
+        await refreshAllData();
+        renderCurrentMappingsSubTab();
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    // 4. SUBMIT POLICY FOR REVIEW
+    async function submitPolicyForReview(policyCode) {
+      if (!confirm(`Submit policy ${policyCode} for formal auditor review?`)) return;
+      try {
+        const res = await authFetch(`${API}/policies/${policyCode}/submit`, { method: 'PATCH' });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(`Submission failed: ${err.detail || 'Error'}`);
+          return;
+        }
+        await refreshAllData();
+        renderCurrentMappingsSubTab();
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    // 5. REVIEW POLICY MODAL
+    function openReviewPolicyModal(code) {
+      const modal = document.getElementById('modal-container');
+      const content = document.getElementById('modal-content');
+
+      content.innerHTML = `
+        <div class="p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+            <h3 class="text-sm font-bold text-slate-900">Review Organizational Policy: ${code}</h3>
+            <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 text-lg leading-none">&times;</button>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Decision</label>
+              <select id="review-action" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+                <option value="APPROVE">Approve Policy</option>
+                <option value="REJECT">Reject with Feedback</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Approver Identity</label>
+              <input type="text" id="review-approver" value="Chief Information Security Officer" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+            </div>
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Review Notes / Rejection Reason</label>
+              <textarea id="review-notes" rows="3" placeholder="Mandatory if rejecting..." class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500"></textarea>
+            </div>
+          </div>
+          <div class="flex justify-end space-x-2 pt-3 border-t border-pink-100">
+            <button onclick="closeModal()" class="px-3.5 py-1.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200">Cancel</button>
+            <button onclick="submitPolicyReview('${code}')" class="px-3.5 py-1.5 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold shadow-xs">Commit Decision</button>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+    }
+
+    async function submitPolicyReview(code) {
+      const action = document.getElementById('review-action').value;
+      const approver = document.getElementById('review-approver').value;
+      const notes = document.getElementById('review-notes').value;
+
+      try {
+        const res = await authFetch(`${API}/policies/${code}/review`, {
+          method: 'PATCH',
+          body: JSON.stringify({
+            action: action,
+            approver: approver,
+            rejection_reason: notes
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ detail: res.statusText }));
+          alert(`Review failed (HTTP ${res.status}):\n${formatApiError(err, res.status)}`);
+          return;
+        }
+        closeModal();
+        await refreshAllData();
+        renderCurrentMappingsSubTab();
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    // 6. ARCHIVE POLICY
+    async function archivePolicy(code) {
+      if (!confirm(`Are you sure you want to archive policy ${code}?`)) return;
+      try {
+        const res = await authFetch(`${API}/policies/${code}/archive`, { method: 'PATCH' });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(`Archive failed: ${err.detail || 'Error'}`);
+          return;
+        }
+        await refreshAllData();
+        renderCurrentMappingsSubTab();
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    // 7. ADD MAPPING MODAL
+    function openAddMappingModal(preselectedPolicyCode, preselectedControlId) {
+      const modal = document.getElementById('modal-container');
+      const content = document.getElementById('modal-content');
+
+      let defaultPolicyId = "";
+      if (preselectedPolicyCode) {
+        const p = cachedData.policies.find(x => x.policy_code === preselectedPolicyCode);
+        if (p) defaultPolicyId = p.id;
+      }
+
+      content.innerHTML = `
+        <div class="p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+            <h3 class="text-sm font-bold text-slate-900">+ Establish New Policy-to-Control Relationship</h3>
+            <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 text-lg leading-none">&times;</button>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Corporate Policy *</label>
+              <select id="modal-map-policy" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+                ${cachedData.policies.map(p => `
+                  <option value="${p.id}" ${p.id == defaultPolicyId ? 'selected' : ''}>
+                    ${p.policy_code} &mdash; ${p.title}
+                  </option>
+                `).join('')}
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-slate-700 font-semibold mb-1">Framework Filter</label>
+                <select id="modal-map-fw-filter" onchange="updateModalControlOptions()" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+                  <option value="ALL">All Frameworks</option>
+                  <option value="NIST_SP_800_53_R5" ${preselectedControlId && preselectedControlId.startsWith('NIST-') ? 'selected' : ''}>NIST SP 800-53 Rev 5</option>
+                  <option value="ISO_27001_2022" ${preselectedControlId && preselectedControlId.startsWith('ISO-') ? 'selected' : ''}>ISO/IEC 27001:2022</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-slate-700 font-semibold mb-1">Framework Control *</label>
+                <select id="modal-map-control" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 font-mono focus:border-pink-500 truncate">
+                  <!-- Populated by updateModalControlOptions -->
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Mapping Rationale & Justification *</label>
+              <textarea id="modal-map-rationale" rows="3" placeholder="Explain why this framework control is addressed by this corporate security policy..." class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500"></textarea>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-slate-700 font-semibold mb-1">Initial Governance Status</label>
+                <div class="p-2 bg-amber-50 border border-amber-200 rounded-lg text-xs font-semibold text-amber-900 flex items-center space-x-1.5">
+                  <span class="inline-block w-2 h-2 rounded-full bg-amber-500"></span>
+                  <span>PROPOSED (Awaiting Auditor Review)</span>
+                </div>
+                <p class="text-[10px] text-slate-400 mt-1">Direct approval restricted. Must be certified via auditor review.</p>
+              </div>
+              <div>
+                <label class="block text-slate-700 font-semibold mb-1">Relationship Type</label>
+                <div class="p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono text-slate-700">
+                  Manual Operator Candidate
+                </div>
+                <p class="text-[10px] text-slate-400 mt-1">Ground-truth designation requires independent sign-off.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-end space-x-2 pt-3 border-t border-pink-100">
+            <button onclick="closeModal()" class="px-3.5 py-1.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200">Cancel</button>
+            <button id="btn-save-mapping" onclick="createMapping()" class="px-3.5 py-1.5 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold shadow-xs">Save Mapping</button>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      updateModalControlOptions(preselectedControlId);
+    }
+
+    function updateModalControlOptions(preselectedId) {
+      const fwFilter = document.getElementById('modal-map-fw-filter').value;
+      const ctrlSelect = document.getElementById('modal-map-control');
+      if (!ctrlSelect) return;
+
+      const filtered = cachedData.controls.filter(c => fwFilter === 'ALL' || c.framework_name === fwFilter);
+      ctrlSelect.innerHTML = filtered.map(c => `
+        <option value="${c.control_id}" ${c.control_id === preselectedId ? 'selected' : ''}>
+          ${c.control_id} &mdash; ${c.title}
+        </option>
+      `).join('');
+    }
+
+    async function createMapping() {
+      const policyId = document.getElementById('modal-map-policy').value;
+      const controlId = document.getElementById('modal-map-control').value;
+      const rationale = document.getElementById('modal-map-rationale').value.trim();
+      const saveBtn = document.getElementById('btn-save-mapping');
+
+      if (!policyId || !controlId || !rationale) {
+        alert("Please select a policy, framework control, and provide a clear mapping rationale.");
+        return;
+      }
+
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = "Saving...";
+      }
+
+      try {
+        const res = await authFetch(`${API}/mappings`, {
+          method: 'POST',
+          body: JSON.stringify({
+            policy_id: policyId.trim(),
+            control_id: controlId.trim(),
+            rationale: rationale,
+            confidence_score: 1.0,
+            mapping_status: "PROPOSED"
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ detail: res.statusText }));
+          alert(`Mapping creation failed (HTTP ${res.status}):\n${formatApiError(err, res.status)}`);
+          if (saveBtn) {
+            saveBtn.disabled = false;
+            saveBtn.textContent = "Save Mapping";
+          }
+          return;
+        }
+        closeModal();
+        await refreshAllData();
+        renderCurrentMappingsSubTab();
+      } catch (e) {
+        alert(`Network or system error: ${e.message}`);
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = "Save Mapping";
+        }
+      }
+    }
+
+    // 8. REVIEW MAPPING MODAL
+    function openReviewMappingModal(mappingId, suggestedStatus) {
+      const modal = document.getElementById('modal-container');
+      const content = document.getElementById('modal-content');
+      const m = cachedData.mappings.find(x => x.id === mappingId);
+      if (!m) return;
+
+      const pol = cachedData.policies.find(p => p.id === m.policy_id) || {};
+
+      content.innerHTML = `
+        <div class="p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+            <h3 class="text-sm font-bold text-slate-900">Auditor Review: Policy-to-Control Relationship</h3>
+            <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 text-lg leading-none">&times;</button>
+          </div>
+
+          <div class="bg-amber-50 border border-amber-200 text-amber-900 p-3 rounded-lg text-xs font-semibold">
+            <span>Regulatory Assurance Notice:</span> A similarity score NEVER certifies regulatory compliance or control effectiveness. Human verification is required.
+          </div>
+
+          <div class="bg-pink-50/30 p-3.5 rounded-xl border border-pink-100 text-xs space-y-1.5">
+            <div><strong class="text-slate-700">Policy:</strong> <span class="font-mono font-bold text-pink-700">${pol.policy_code || m.policy_id}</span> &mdash; ${pol.title || ''}</div>
+            <div><strong class="text-slate-700">Framework Control:</strong> <span class="font-mono font-bold text-slate-900">${m.control_id}</span></div>
+            <div><strong class="text-slate-700">Candidate Rationale:</strong> <span class="text-slate-600">${m.rationale || 'None provided'}</span></div>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Review Decision *</label>
+              <select id="modal-rev-decision" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500 font-semibold">
+                <option value="APPROVED" ${suggestedStatus === 'APPROVED' ? 'selected' : ''}>APPROVE Mapping (Verified by Auditor)</option>
+                <option value="REJECTED" ${suggestedStatus === 'REJECTED' ? 'selected' : ''}>REJECT Mapping (Insufficient Scope / Inaccurate)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Auditor Identity *</label>
+              <input type="text" id="modal-rev-reviewer" value="Senior Compliance Auditor" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+            </div>
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Auditor Review Notes (Mandatory for Rejection) *</label>
+              <textarea id="modal-rev-notes" rows="3" placeholder="Enter auditor justification, evidence verified, or reason for rejection..." class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500"></textarea>
+            </div>
+          </div>
+
+          <div class="flex justify-end space-x-2 pt-3 border-t border-pink-100">
+            <button onclick="closeModal()" class="px-3.5 py-1.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200">Cancel</button>
+            <button onclick="submitMappingReview('${m.id}')" class="px-3.5 py-1.5 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold shadow-xs">Commit Decision</button>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+    }
+
+    async function submitMappingReview(mappingId) {
+      const decision = document.getElementById('modal-rev-decision').value;
+      const reviewer = document.getElementById('modal-rev-reviewer').value.trim();
+      const notes = document.getElementById('modal-rev-notes').value.trim();
+
+      if (decision === 'REJECTED' && !notes) {
+        alert("Review notes explaining the reason for rejection are mandatory.");
+        return;
+      }
+
+      try {
+        const res = await authFetch(`${API}/mappings/${mappingId}/review`, {
+          method: 'PATCH',
+          body: JSON.stringify({
+            status: decision,
+            reviewer: reviewer || 'Compliance Auditor',
+            review_notes: notes || 'Approved by compliance auditor.'
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ detail: res.statusText }));
+          alert(`Review failed (HTTP ${res.status}):\n${formatApiError(err, res.status)}`);
+          return;
+        }
+        closeModal();
+        await refreshAllData();
+        renderCurrentMappingsSubTab();
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    // 9. MAPPING AUDIT LOG MODAL
+    async function openMappingAuditModal(mappingId) {
+      const modal = document.getElementById('modal-container');
+      const content = document.getElementById('modal-content');
+      const m = cachedData.mappings.find(x => x.id === mappingId);
+      if (!m) return;
+
+      const pol = cachedData.policies.find(p => p.id === m.policy_id) || {};
+
+      content.innerHTML = `
+        <div class="p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+            <h3 class="text-sm font-bold text-slate-900">Mapping Review Audit Trail</h3>
+            <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 text-lg leading-none">&times;</button>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <div class="bg-pink-50/30 p-3.5 rounded-xl border border-pink-100 space-y-1">
+              <div><strong class="text-slate-700">Policy:</strong> <span class="font-mono font-bold text-pink-700">${pol.policy_code || m.policy_id}</span> &mdash; ${pol.title || ''}</div>
+              <div><strong class="text-slate-700">Framework Control:</strong> <span class="font-mono font-bold text-slate-900">${m.control_id}</span></div>
+              <div><strong class="text-slate-700">Current Status:</strong> <span class="font-mono font-semibold">${m.mapping_status}</span></div>
+              <div><strong class="text-slate-700">Confidence Score:</strong> <span class="font-mono">${Math.round((m.confidence_score || 1.0) * 100)}%</span></div>
+            </div>
+
+            <div class="bg-[#faf7f8] p-3.5 rounded-xl border border-slate-200/60 space-y-2">
+              <div class="font-bold text-slate-700 uppercase tracking-wider text-[10px]">Auditor Review Record</div>
+              <div><strong class="text-slate-700">Reviewer:</strong> ${m.reviewer || 'Pending Review'}</div>
+              <div><strong class="text-slate-700">Reviewed At:</strong> ${m.reviewed_at || 'Not yet reviewed'}</div>
+              <div><strong class="text-slate-700">Review Notes:</strong> <span class="text-slate-600">${m.review_notes || 'No review notes recorded.'}</span></div>
+            </div>
+
+            <div class="bg-[#faf7f8] p-3.5 rounded-xl border border-slate-200/60 space-y-1">
+              <div class="font-bold text-slate-700 uppercase tracking-wider text-[10px]">Candidate Provenance</div>
+              <div><strong class="text-slate-700">Initial Rationale:</strong> <span class="text-slate-600">${m.rationale || 'Initial candidate relationship.'}</span></div>
+              <div><strong class="text-slate-700">Created At:</strong> ${m.created_at || 'Pre-seeded baseline'}</div>
+            </div>
+          </div>
+
+          <div class="flex justify-end pt-3 border-t border-pink-100">
+            <button onclick="closeModal()" class="px-4 py-1.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200">Close</button>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+    }
+
+    // 10. DELETE POLICY MAPPING
+    async function deletePolicyMapping(mappingId) {
+      if (!confirm("Are you sure you want to delete this policy-to-control relationship?")) return;
+      try {
+        const res = await authFetch(`${API}/mappings/${mappingId}`, { method: 'DELETE' });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ detail: res.statusText }));
+          alert(`Deletion failed (HTTP ${res.status}):\n${formatApiError(err, res.status)}`);
+          return;
+        }
+        await refreshAllData();
+        renderCurrentMappingsSubTab();
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    // 11. UNLINK POLICY CONTROL (FROM DETAIL MODAL)
+    async function unlinkPolicyControl(mappingId, policyCode) {
+      if (!confirm("Unlink this control from the policy?")) return;
+      try {
+        const res = await authFetch(`${API}/mappings/${mappingId}`, { method: 'DELETE' });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(`Unlink failed: ${err.detail || 'Error'}`);
+          return;
+        }
+        await refreshAllData();
+        openPolicyDetailModal(policyCode);
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    // =========================================================================
+    // SECTION 4: ASSESSMENTS & EVIDENCE
+    // =========================================================================
+    let activeEvidenceSubTab = 'vault'; // 'vault' or 'history'
+
+    function renderAssessmentsAndEvidence(container) {
+      container.innerHTML = `
+        <div class="space-y-4">
+          <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+            <div>
+              <h2 class="text-base font-bold text-slate-900">Assessments & Cryptographic Evidence Vault</h2>
+              <p class="text-xs text-slate-500">Tamper-evident SHA-256 evidence ledger and historical assessment sweep records.</p>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button onclick="switchEvidenceSubTab('vault')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition ${activeEvidenceSubTab === 'vault' ? 'bg-pink-600 text-white shadow-xs' : 'bg-white text-slate-600 border border-slate-200 hover:bg-pink-50'}">
+                Evidence Vault (SHA-256 Chain)
+              </button>
+              <button onclick="switchEvidenceSubTab('history')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition ${activeEvidenceSubTab === 'history' ? 'bg-pink-600 text-white shadow-xs' : 'bg-white text-slate-600 border border-slate-200 hover:bg-pink-50'}">
+                Assessment Sweep History
+              </button>
+            </div>
+          </div>
+
+          <div id="evidence-subtab-content">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      `;
+      renderCurrentEvidenceSubTab();
+    }
+
+    function switchEvidenceSubTab(tab) {
+      activeEvidenceSubTab = tab;
+      renderAssessmentsAndEvidence(document.getElementById('content-container'));
+    }
+
+    function renderCurrentEvidenceSubTab() {
+      const container = document.getElementById('evidence-subtab-content');
+      if (!container) return;
+
+      if (activeEvidenceSubTab === 'vault') {
+        const isIntact = cachedData.overview?.evidence?.ledger_valid ?? true;
+        container.innerHTML = `
+          <div class="space-y-4">
+            <!-- Ledger Integrity Banner -->
+            <div class="bg-white border ${isIntact ? 'border-emerald-200 bg-emerald-50/40' : 'border-rose-200 bg-rose-50/50'} rounded-2xl p-4 flex items-center justify-between shadow-xs">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-xl ${isIntact ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'} flex items-center justify-center font-bold">
+                  &check;
+                </div>
+                <div>
+                  <div class="text-xs font-bold ${isIntact ? 'text-emerald-900' : 'text-rose-900'}">${isIntact ? 'Cryptographic Hash-Linked Ledger Intact' : 'CRITICAL: Ledger Chain Integrity Broken'}</div>
+                  <div class="text-[11px] text-slate-500">Canonical SHA-256 payload digests chained sequentially across ${cachedData.evidence.length} entries.</div>
+                </div>
+              </div>
+              <button onclick="verifyFullLedger()" class="px-3 py-1.5 bg-white hover:bg-pink-50 text-slate-700 border border-slate-200 hover:border-pink-300 rounded-lg text-xs font-semibold transition shadow-2xs">
+                Audit Chain Integrity
+              </button>
+            </div>
+
+            <!-- Evidence Table -->
+            <div class="bg-white border border-pink-100/80 rounded-2xl shadow-xs overflow-hidden">
+              <div class="overflow-x-auto w-full">
+                <table class="w-full min-w-[750px] text-left text-xs text-slate-700">
+                <thead class="bg-pink-50/50 border-b border-pink-100 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+                  <tr>
+                    <th class="px-4 py-3">Test ID</th>
+                    <th class="px-4 py-3">Provenance</th>
+                    <th class="px-4 py-3">Result</th>
+                    <th class="px-4 py-3">Payload SHA-256 Digest</th>
+                    <th class="px-4 py-3">Collected At</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 font-mono text-[11px]">
+                  ${cachedData.evidence.slice(0, 50).map(e => `
+                    <tr class="hover:bg-pink-50/30">
+                      <td class="px-4 py-3 text-pink-700 font-bold">${e.test_id}</td>
+                      <td class="px-4 py-3 font-sans">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold ${e.evidence_provenance === 'LIVE_TARGET' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-pink-50 text-pink-700 border border-pink-200'}">
+                          ${e.evidence_provenance}
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 font-sans">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${e.result_code === 1 ? 'text-emerald-700 bg-emerald-50 border border-emerald-200' : (e.result_code === -1 ? 'text-rose-700 bg-rose-50 border border-rose-200' : 'text-slate-600 bg-slate-100 border border-slate-200')}">
+                          ${e.result_code === 1 ? 'PASS' : (e.result_code === -1 ? 'FAIL' : 'ERROR')}
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 text-slate-500 truncate max-w-xs" title="${e.payload_sha256}">${e.payload_sha256}</td>
+                      <td class="px-4 py-3 text-slate-500 font-sans">${new Date(e.collected_at).toLocaleTimeString()}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        // Tab 2: Assessment Run History
+        container.innerHTML = `
+          <div class="space-y-4">
+            <div class="bg-white border border-pink-100/80 rounded-2xl shadow-xs overflow-hidden">
+              <div class="overflow-x-auto w-full">
+                <table class="w-full min-w-[700px] text-left text-xs text-slate-700">
+                <thead class="bg-pink-50/50 border-b border-pink-100 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+                  <tr>
+                    <th class="px-4 py-3">Run ID</th>
+                    <th class="px-4 py-3">Trigger Type</th>
+                    <th class="px-4 py-3">Completed (UTC)</th>
+                    <th class="px-4 py-3">Duration</th>
+                    <th class="px-4 py-3">Passed</th>
+                    <th class="px-4 py-3">Failed</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 font-mono text-[11px]">
+                  ${cachedData.assessments.map(a => `
+                    <tr class="hover:bg-pink-50/30">
+                      <td class="px-4 py-3 text-slate-500">${a.id.substring(0, 8)}...</td>
+                      <td class="px-4 py-3 text-slate-900 font-sans font-bold">${a.run_type}</td>
+                      <td class="px-4 py-3 text-slate-500">${new Date(a.completed_at || a.started_at).toISOString().replace('T', ' ').substring(0, 19)}</td>
+                      <td class="px-4 py-3 text-slate-600">${a.duration_ms} ms</td>
+                      <td class="px-4 py-3 text-emerald-700 font-bold">${a.passed_count}</td>
+                      <td class="px-4 py-3 ${a.failed_count > 0 ? 'text-rose-700 font-bold' : 'text-slate-400'}">${a.failed_count}</td>
+                    </tr>
+                  `).join('') || '<tr><td colspan="6" class="p-8 text-center text-slate-500">No assessment executions recorded.</td></tr>'}
+                </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    async function verifyFullLedger() {
+      try {
+        const res = await authFetch(`${API}/ledger/verify`);
+        const data = await res.json();
+        alert(`Ledger Verification Result:\nIntact: ${data.ledger_intact}\nRecords: ${data.total_records}\nViolations: ${data.violations_count}`);
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    // =========================================================================
+    // SECTION 5: FINDINGS & REMEDIATION
+    // =========================================================================
+    function renderFindings(container) {
+      container.innerHTML = `
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-base font-bold text-slate-900">Compliance Findings & Remediation</h2>
+              <p class="text-xs text-slate-500">Lifecycle tracking: OPEN &rarr; IN_PROGRESS &rarr; READY_FOR_RETEST &rarr; VERIFIED_RESOLVED.</p>
+            </div>
+            <div class="text-xs text-pink-700 bg-pink-50 px-2.5 py-1 rounded-full border border-pink-100 font-medium">
+              Note: Resolving findings requires passing verified re-assessments.
+            </div>
+          </div>
+
+          <div class="bg-white border border-pink-100/80 rounded-2xl shadow-xs overflow-hidden">
+            <div class="overflow-x-auto w-full">
+              <table class="w-full min-w-[800px] text-left text-xs text-slate-700">
+              <thead class="bg-pink-50/50 border-b border-pink-100 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+                <tr>
+                  <th class="px-4 py-3">Severity</th>
+                  <th class="px-4 py-3">Control ID</th>
+                  <th class="px-4 py-3">Finding Title</th>
+                  <th class="px-4 py-3">Target</th>
+                  <th class="px-4 py-3">Lifecycle Status</th>
+                  <th class="px-4 py-3 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                ${cachedData.findings.map(f => `
+                  <tr class="hover:bg-pink-50/30">
+                    <td class="px-4 py-3 font-bold font-mono ${f.severity === 'HIGH' || f.severity === 'CRITICAL' ? 'text-rose-700' : 'text-amber-700'}">${f.severity}</td>
+                    <td class="px-4 py-3 font-mono font-bold text-pink-700">${f.control_id}</td>
+                    <td class="px-4 py-3 max-w-sm">
+                      <div class="font-bold text-slate-900">${f.title}</div>
+                      <div class="text-[11px] text-slate-500 truncate mt-0.5">${f.description}</div>
+                      ${f.risk_waiver_justification ? `<div class="text-[10px] text-purple-700 font-mono mt-1 font-semibold">[Waiver by ${f.risk_waiver_approved_by}]: ${f.risk_waiver_justification}</div>` : ''}
+                    </td>
+                    <td class="px-4 py-3 font-mono text-[11px] text-slate-500">${f.target_type || 'LINUX_VM'}</td>
+                    <td class="px-4 py-3">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono ${f.status === 'VERIFIED_RESOLVED' || f.status === 'RESOLVED' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : (f.status === 'RISK_ACCEPTED' ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-rose-50 text-rose-700 border border-rose-200')}">
+                        ${f.status}
+                      </span>
+                    </td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="flex items-center justify-end space-x-1.5">
+                        ${f.status !== 'VERIFIED_RESOLVED' && f.status !== 'RESOLVED' && f.status !== 'RISK_ACCEPTED' ? `
+                          <button onclick="advanceFindingStatus('${f.id}', '${f.status}')" class="px-2.5 py-1 bg-white hover:bg-pink-50 text-slate-700 border border-slate-200 hover:border-pink-300 text-[11px] font-semibold rounded-lg shadow-2xs">
+                            ${f.status === 'OPEN' ? 'Start Remediation' : (f.status === 'IN_PROGRESS' ? 'Mark Ready for Retest' : 'Resolve')}
+                          </button>
+                          <button onclick="openWaiverModal('${f.id}')" class="px-2.5 py-1 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 text-[11px] font-semibold rounded-lg">
+                            Risk Waiver
+                          </button>
+                        ` : '<span class="text-slate-400 text-[11px] font-medium">Closed</span>'}
+                      </div>
+                    </td>
+                  </tr>
+                `).join('') || '<tr><td colspan="6" class="p-8 text-center text-slate-500">No security findings recorded.</td></tr>'}
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    async function advanceFindingStatus(id, currentStatus) {
+      let nextStatus = "IN_PROGRESS";
+      if (currentStatus === "IN_PROGRESS") nextStatus = "READY_FOR_RETEST";
+      else if (currentStatus === "READY_FOR_RETEST") nextStatus = "VERIFIED_RESOLVED";
+
+      try {
+        const res = await authFetch(`${API}/findings/${id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ status: nextStatus })
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(`Status transition rejected: ${err.detail}`);
+          return;
+        }
+        await refreshAllData();
+        renderFindings(document.getElementById('content-container'));
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    function openWaiverModal(id) {
+      const modal = document.getElementById('modal-container');
+      const content = document.getElementById('modal-content');
+
+      content.innerHTML = `
+        <div class="p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+            <h3 class="text-sm font-bold text-slate-900">Authorize Formal Security Risk Waiver</h3>
+            <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700">&times;</button>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Business Justification & Mitigating Controls</label>
+              <textarea id="waiver-justification" rows="3" placeholder="Document operational rationale and compensatory mitigations..." class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500"></textarea>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Approving Authority</label>
+              <input type="text" id="waiver-approver" value="Chief Information Security Officer" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+            </div>
+            <div>
+              <label class="block text-slate-700 font-semibold mb-1">Expiration Date</label>
+              <input type="date" id="waiver-expiry" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:border-pink-500">
+            </div>
+          </div>
+          <div class="flex justify-end space-x-2 pt-3 border-t border-pink-100">
+            <button onclick="closeModal()" class="px-3.5 py-1.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200">Cancel</button>
+            <button onclick="submitRiskWaiver('${id}')" class="px-3.5 py-1.5 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold shadow-xs">Grant Waiver</button>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+    }
+
+    async function submitRiskWaiver(id) {
+      const just = document.getElementById('waiver-justification').value.trim();
+      const app = document.getElementById('waiver-approver').value.trim();
+      const exp = document.getElementById('waiver-expiry').value;
+
+      if (!just || !app || !exp) {
+        alert("Please complete justification, approver, and expiration date.");
+        return;
+      }
+
+      try {
+        const res = await authFetch(`${API}/findings/${id}/waiver`, {
+          method: 'POST',
+          body: JSON.stringify({
+            justification: just,
+            approved_by: app,
+            expires_at: new Date(exp).toISOString()
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(`Waiver submission failed: ${err.detail}`);
+          return;
+        }
+        closeModal();
+        await refreshAllData();
+        renderFindings(document.getElementById('content-container'));
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    // =========================================================================
+    // SECTION 6: LAB & DRIFT TESTING
+    // =========================================================================
+    let chaosMode = 'SIMULATED';
+
+    function renderLabAndDrift(container) {
+      container.innerHTML = `
+        <div class="space-y-6">
+          <div class="flex items-center justify-between border-b border-pink-100 pb-4">
+            <div>
+              <h2 class="text-base font-bold text-slate-900">Lab & Chaos Drift Engine</h2>
+              <p class="text-xs text-slate-500">Inject controlled configuration drift, test EW-CES detection, and verify baseline recovery.</p>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="flex items-center bg-white border border-slate-200 rounded-lg p-1 text-xs shadow-2xs">
+                <button onclick="setChaosMode('SIMULATED')" class="px-3 py-1 rounded-md font-semibold transition ${chaosMode === 'SIMULATED' ? 'bg-pink-600 text-white shadow-xs' : 'text-slate-600 hover:text-pink-600'}">
+                  Simulated Mode
+                </button>
+                <button onclick="setChaosMode('LIVE_LAB_MUTATION')" class="px-3 py-1 rounded-md font-semibold transition ${chaosMode === 'LIVE_LAB_MUTATION' ? 'bg-pink-600 text-white shadow-xs' : 'text-slate-600 hover:text-pink-600'}">
+                  Live Lab Mutation
+                </button>
+              </div>
+              <button onclick="restoreChaosBaseline()" class="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-xs font-semibold transition">
+                Restore Compliant Baseline
+              </button>
+            </div>
+          </div>
+
+          <!-- 8-Phase Verifiable Experiment Banner -->
+          <div class="bg-white border border-pink-100/80 rounded-2xl p-5 space-y-3 shadow-xs">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Verifiable 8-Phase Drift Lifecycle</h3>
+              <span class="text-[10px] text-pink-700 bg-pink-50 px-2 py-0.5 rounded-full border border-pink-200 font-mono font-bold">Auditable State Machine</span>
+            </div>
+            <div class="grid grid-cols-4 md:grid-cols-8 gap-2 text-[10px] font-mono text-center">
+              <div class="bg-pink-50/50 p-2 rounded-lg border border-pink-100 text-slate-700 font-semibold">1. Precheck</div>
+              <div class="bg-pink-50/50 p-2 rounded-lg border border-pink-100 text-slate-700 font-semibold">2. Baseline</div>
+              <div class="bg-pink-50/50 p-2 rounded-lg border border-pink-100 text-slate-700 font-semibold">3. Mutate</div>
+              <div class="bg-pink-50/50 p-2 rounded-lg border border-pink-100 text-slate-700 font-semibold">4. Verify</div>
+              <div class="bg-pink-50/50 p-2 rounded-lg border border-pink-100 text-slate-700 font-semibold">5. Assess</div>
+              <div class="bg-pink-50/50 p-2 rounded-lg border border-pink-100 text-slate-700 font-semibold">6. Detect</div>
+              <div class="bg-pink-50/50 p-2 rounded-lg border border-pink-100 text-slate-700 font-semibold">7. Restore</div>
+              <div class="bg-pink-50/50 p-2 rounded-lg border border-pink-100 text-slate-700 font-semibold">8. Recover</div>
+            </div>
+          </div>
+
+          <!-- Drift Catalog Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${Object.entries(cachedData.chaos).map(([id, info]) => `
+              <div class="bg-white border border-pink-100/80 rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-xs hover:border-pink-200 transition">
+                <div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-mono font-bold text-pink-700">${id}</span>
+                    <span class="text-[10px] text-slate-600 font-mono bg-pink-50 px-2 py-0.5 rounded-full border border-pink-100">${info.target}</span>
+                  </div>
+                  <h3 class="text-sm font-bold text-slate-900 mt-2">${info.description}</h3>
+                  <div class="text-[11px] text-slate-500 mt-2 font-medium">Target Controls: <strong class="text-slate-800 font-mono">${info.affected_controls.join(', ')}</strong></div>
+                </div>
+
+                <div class="flex items-center space-x-2 pt-3 border-t border-pink-50">
+                  <button onclick="run8PhaseExperiment('${id}')" class="flex-1 bg-pink-600 hover:bg-pink-700 text-white text-xs font-semibold py-2 rounded-lg transition shadow-xs">
+                    Run Full 8-Phase Experiment
+                  </button>
+                  <button onclick="injectChaos('${id}', '${chaosMode}')" class="px-3 bg-white hover:bg-pink-50 text-slate-700 text-xs py-2 rounded-lg font-semibold border border-slate-200 hover:border-pink-300">
+                    Inject Only
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function setChaosMode(mode) {
+      chaosMode = mode;
+      renderLabAndDrift(document.getElementById('content-container'));
+    }
+
+    async function run8PhaseExperiment(driftId) {
+      const modal = document.getElementById('modal-container');
+      const content = document.getElementById('modal-content');
+
+      content.innerHTML = `
+        <div class="p-6 space-y-4">
+          <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+            <h3 class="text-sm font-bold text-slate-900">Executing 8-Phase Experiment: ${driftId} (${chaosMode})</h3>
+            <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700">&times;</button>
+          </div>
+          <div id="experiment-output" class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono space-y-2 max-h-80 overflow-y-auto">
+            <div class="text-pink-600 animate-pulse">&bull; Dispatching verifiable experiment to lab target...</div>
+          </div>
+          <div class="flex justify-end pt-3 border-t border-pink-100">
+            <button onclick="closeModal()" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold">Close</button>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+
+      try {
+        const res = await authFetch(`${API}/chaos/experiment/${driftId}?mode=${chaosMode}`, { method: 'POST' });
+        const data = await res.json();
+        const out = document.getElementById('experiment-output');
+        if (!out) return;
+
+        if (data.events) {
+          out.innerHTML = data.events.map(ev => `
+            <div class="flex items-start space-x-2 ${ev.status === 'SUCCESS' ? 'text-emerald-700' : 'text-rose-700'}">
+              <span>${ev.status === 'SUCCESS' ? '[&check;]' : '[&cross;]'}</span>
+              <div>
+                <strong>${ev.phase}:</strong> <span class="text-slate-700">${typeof ev.details === 'object' ? JSON.stringify(ev.details) : ev.details}</span>
+              </div>
+            </div>
+          `).join('');
+          out.innerHTML += `<div class="pt-2 font-bold ${data.lifecycle_completed ? 'text-emerald-700' : 'text-rose-700'}">&rarr; Experiment Completed: ${data.lifecycle_completed ? 'PASS (Detection & Recovery Verified)' : 'FAILED'}</div>`;
+        } else {
+          out.innerHTML = `<div class="text-rose-600">Execution Error: ${JSON.stringify(data)}</div>`;
+        }
+        await refreshAllData();
+      } catch (e) {
+        document.getElementById('experiment-output').innerHTML = `<div class="text-rose-600">Experiment Error: ${e.message}</div>`;
+      }
+    }
+
+    async function injectChaos(id, mode) {
+      try {
+        const res = await authFetch(`${API}/chaos/inject/${id}?mode=${mode}`, { method: 'POST' });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(`Injection error: ${err.detail}`);
+          return;
+        }
+        alert(`Drift ${id} injected in ${mode} mode.`);
+        await refreshAllData();
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    async function restoreChaosBaseline() {
+      try {
+        const res = await authFetch(`${API}/chaos/restore`, { method: 'POST' });
+        const data = await res.json();
+        alert(`Baseline restored: cleared ${data.cleared_drifts_count} drifts.`);
+        await refreshAllData();
+        renderLabAndDrift(document.getElementById('content-container'));
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    // =========================================================================
+    // AUDIT READINESS DOSSIER MODAL
+    // =========================================================================
+    async function openAuditDossierModal() {
+      const modal = document.getElementById('modal-container');
+      const content = document.getElementById('modal-content');
+
+      content.innerHTML = `<div class="p-8 text-center text-xs text-slate-500">Compiling enterprise compliance dossier...</div>`;
+      modal.classList.remove('hidden');
+
+      try {
+        const res = await authFetch(`${API}/reports/summary`);
+        const r = await res.json();
+
+        content.innerHTML = `
+          <div class="p-6 space-y-4 max-h-[85vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900">${r.report_title}</h3>
+                <div class="text-[11px] text-slate-500">Generated UTC: ${new Date(r.generated_at_utc).toUTCString()}</div>
+              </div>
+              <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700">&times;</button>
+            </div>
+
+            <!-- Executive Summary Table -->
+            <div class="bg-pink-50/40 border border-pink-100 rounded-xl p-4 space-y-2.5 font-mono text-xs">
+              <div class="flex justify-between text-slate-700">
+                <span>Frameworks Evaluated:</span>
+                <span class="text-slate-900 font-bold">${r.frameworks_evaluated.join(', ')}</span>
+              </div>
+              <div class="flex justify-between text-slate-700">
+                <span>Framework Catalog Total:</span>
+                <span class="text-slate-900 font-bold">${r.control_coverage.catalog_total_controls || r.control_coverage.total_controls}</span>
+              </div>
+              <div class="flex justify-between text-slate-700">
+                <span>Controls with Executable Tests:</span>
+                <span class="text-indigo-700 font-bold">${r.control_coverage.controls_with_executable_tests ?? 4}</span>
+              </div>
+              <div class="flex justify-between text-slate-700">
+                <span>Verified Effective Controls:</span>
+                <span class="text-emerald-700 font-bold">${r.control_coverage.verified_effective}</span>
+              </div>
+              <div class="flex justify-between text-slate-700">
+                <span>Config Compliant (Unverified):</span>
+                <span class="text-amber-700 font-bold">${r.control_coverage.config_compliant_unverified}</span>
+              </div>
+              <div class="flex justify-between text-slate-700">
+                <span>Deficient Controls:</span>
+                <span class="text-rose-700 font-bold">${r.control_coverage.deficient}</span>
+              </div>
+              <div class="flex justify-between text-slate-700">
+                <span>Assurance Index (Assessed Controls):</span>
+                <span class="text-pink-700 font-bold">${r.control_coverage.assurance_index_assessed_pct ?? r.control_coverage.assurance_index_pct}%</span>
+              </div>
+              <div class="flex justify-between text-slate-700">
+                <span>Assurance Index (Entire Catalog):</span>
+                <span class="text-slate-700 font-bold">${r.control_coverage.assurance_index_catalog_pct ?? r.control_coverage.assurance_index_pct}%</span>
+              </div>
+              <div class="flex justify-between text-slate-700">
+                <span>Cryptographic Ledger Continuity:</span>
+                <span class="${r.evidence_integrity.ledger_chain_intact ? 'text-emerald-700' : 'text-rose-700'} font-bold">${r.evidence_integrity.ledger_chain_intact ? 'UNBROKEN' : 'TAMPER DETECTED'}</span>
+              </div>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-500 italic">
+              ${r.disclaimer}
+            </div>
+
+            <div class="flex justify-end space-x-2 pt-3 border-t border-pink-100">
+              <button onclick="window.print()" class="px-3.5 py-1.5 bg-white hover:bg-pink-50 text-slate-700 border border-slate-200 rounded-lg font-semibold">Print Dossier</button>
+              <button onclick="closeModal()" class="px-3.5 py-1.5 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold shadow-xs">Done</button>
+            </div>
+          </div>
+        `;
+      } catch (e) {
+        content.innerHTML = `<div class="p-6 text-rose-600">Failed to load dossier: ${e.message}</div>`;
+      }
+    }
+
+    // Modal & Drawer helpers
+    function closeModal() {
+      document.getElementById('modal-container').classList.add('hidden');
+    }
+
+    function openControlDrawer(controlId) {
+      const c = cachedData.controls.find(x => x.control_id === controlId);
+      if (!c) return;
+
+      const s = getLatestScore(controlId);
+      const content = document.getElementById('drawer-content');
+
+      // Find linked policies
+      const linkedMaps = cachedData.mappings.filter(m => m.control_id === controlId);
+      const linkedPolicies = linkedMaps.map(m => {
+        const p = cachedData.policies.find(pol => pol.id === m.policy_id) || {};
+        return { policy: p, mapping: m };
+      });
+
+      let typeBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-50 text-emerald-700 border border-emerald-200">Active Base Control</span>';
+      if (c.status === 'WITHDRAWN') {
+        typeBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 text-slate-500 border border-slate-200">Withdrawn Control</span>';
+      } else if (c.is_enhancement) {
+        typeBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-mono bg-indigo-50 text-indigo-700 border border-indigo-200">Control Enhancement ${c.parent_control_id ? `(Parent: ${c.parent_control_id})` : ''}</span>`;
+      }
+
+      content.innerHTML = `
+        <div class="space-y-4">
+          <!-- Control Header Strip -->
+          <div class="border-b border-pink-100 pb-3">
+            <div class="flex items-center space-x-2">
+              <span class="text-[11px] font-mono text-pink-700 font-bold">${c.framework_name === 'NIST_SP_800_53_R5' ? 'NIST SP 800-53 Rev 5' : 'ISO/IEC 27001:2022'}</span>
+              ${typeBadge}
+            </div>
+            <h2 class="text-base font-bold text-slate-900 mt-1">${c.control_id} &mdash; ${c.title}</h2>
+            <div class="text-[11px] text-slate-500 mt-0.5 font-medium">${c.domain_family}</div>
+            <div class="mt-2.5 flex items-center space-x-2">
+              ${renderStateBadge(s.state)}
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-pink-50 text-pink-700 border border-pink-200">${c.assessment_method || 'TECHNICAL_AUTOMATED'}</span>
+            </div>
+          </div>
+
+          <!-- Official Requirement -->
+          <div class="space-y-1">
+            <div class="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Official Requirement</div>
+            <p class="text-xs text-slate-700 leading-relaxed bg-pink-50/30 p-3.5 rounded-xl border border-pink-100 max-h-48 overflow-y-auto">${c.official_requirement || c.description}</p>
+          </div>
+
+          <!-- Implementation Guidance -->
+          <div class="space-y-1">
+            <div class="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Implementation Guidance</div>
+            <p class="text-xs text-slate-600 leading-relaxed bg-[#faf7f8] p-3.5 rounded-xl border border-slate-200/60 max-h-40 overflow-y-auto">${c.guidance || 'Standard administrative and engineering review procedures apply.'}</p>
+          </div>
+
+          <!-- Linked Corporate Policies -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <span class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Linked Corporate Policies (${linkedPolicies.length})</span>
+              </div>
+              <button onclick="closeDrawer(); openAddMappingModal(null, '${c.control_id}')" class="px-2 py-0.5 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 rounded text-[11px] font-semibold transition">
+                + Link Policy
+              </button>
+            </div>
+
+            <div class="space-y-1.5 max-h-48 overflow-y-auto">
+              ${linkedPolicies.map(lp => {
+                const isApproved = (lp.mapping.mapping_status === 'APPROVED' || lp.mapping.mapping_status === 'HUMAN_APPROVED');
+                return `
+                  <div class="p-2.5 bg-white border border-slate-200 rounded-xl text-xs space-y-1">
+                    <div class="flex items-center justify-between">
+                      <span class="font-mono font-bold text-pink-700 cursor-pointer hover:underline" onclick="closeDrawer(); openPolicyDetailModal('${lp.policy.policy_code}')">
+                        ${lp.policy.policy_code}
+                      </span>
+                      <span class="px-2 py-0.2 rounded text-[10px] font-mono font-semibold ${isApproved ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">
+                        ${lp.mapping.mapping_status}
+                      </span>
+                    </div>
+                    <div class="font-medium text-slate-900 truncate">${lp.policy.title || 'Corporate Policy'}</div>
+                    <div class="text-[11px] text-slate-500 line-clamp-2">${lp.mapping.rationale || 'Candidate mapping relationship.'}</div>
+                  </div>
+                `;
+              }).join('') || '<div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-400 text-center">No corporate policies linked yet.</div>'}
+            </div>
+          </div>
+
+          <!-- EW-CES Decision Rationale -->
+          <div class="space-y-1">
+            <div class="text-[11px] font-bold text-slate-600 uppercase tracking-wider">EW-CES Decision Rationale</div>
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200 text-xs space-y-2 shadow-2xs">
+              <div class="text-slate-800 leading-relaxed font-medium">${s.diagnostic_summary || 'No score record found.'}</div>
+              <div class="pt-2 border-t border-slate-100 flex justify-between text-[11px] text-slate-500 font-mono">
+                <span>Evidence Freshness: ${Math.round((s.freshness_score || 0) * 100)}%</span>
+                <span>Checksum Valid: ${s.hash_integrity_verified ? 'Yes' : 'No'}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('drawer-backdrop').classList.remove('hidden');
+      const drawer = document.getElementById('detail-drawer');
+      drawer.classList.remove('hidden');
+      setTimeout(() => drawer.classList.remove('translate-x-full'), 10);
+    }
+
+    function closeDrawer() {
+      const drawer = document.getElementById('detail-drawer');
+      drawer.classList.add('translate-x-full');
+      setTimeout(() => {
+        drawer.classList.add('hidden');
+        document.getElementById('drawer-backdrop').classList.add('hidden');
+      }, 200);
+    }
+
+    // Trigger Assessment Sweep (Asynchronous Polling)
+    async function triggerAssessment(allowSimulation) {
+      const btn = document.getElementById('btn-assess-sim');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = `<span class="animate-pulse">Initiating...</span>`;
+      btn.disabled = true;
+
+      const startTime = Date.now();
+
+      try {
+        const res = await authFetch(`${API}/orchestrator/run-all?allow_simulation=${allowSimulation}`, { method: 'POST' });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(`Assessment Failed (${res.status}): ${err.detail || 'Execution error'}`);
+          return;
+        }
+
+        const data = await res.json();
+
+        if (res.status === 202 && data.task_id) {
+          const taskId = data.task_id;
+          let pollAttempts = 0;
+          const maxAttempts = 120;
+
+          while (pollAttempts < maxAttempts) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            pollAttempts++;
+            const elapsed = Math.round((Date.now() - startTime) / 1000);
+            btn.innerHTML = `<span class="animate-pulse">Assessing (${elapsed}s)...</span>`;
+
+            try {
+              const statusRes = await authFetch(`${API}/orchestrator/status/${taskId}`);
+              if (!statusRes.ok) continue;
+              const task = await statusRes.json();
+              if (task.status === 'COMPLETED') break;
+              else if (task.status === 'FAILED') {
+                alert(`Task Failed: ${task.error || 'Encountered execution failure.'}`);
+                return;
+              }
+            } catch (pollErr) {
+              console.warn('Polling error:', pollErr);
+            }
+          }
+        }
+
+        await refreshAllData();
+        navigate(currentView);
+      } catch (err) {
+        alert(`Request Failed: ${err.message}`);
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>

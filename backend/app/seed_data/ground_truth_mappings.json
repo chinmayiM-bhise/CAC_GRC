@@ -1,0 +1,426 @@
+[
+  {
+    "policy_code": "POL-IAM-001",
+    "control_id": "NIST-AC-7",
+    "mapping_status": "HUMAN_APPROVED",
+    "is_ground_truth": true,
+    "confidence_score": 1.0,
+    "rationale": "POL-IAM-001 directly operationalizes NIST AC-7 by enforcing a hard 5-attempt limit on consecutive invalid logon attempts and a mandatory 15-minute lockout."
+  },
+  {
+    "policy_code": "POL-IAM-001",
+    "control_id": "ISO-A.8.5",
+    "mapping_status": "HUMAN_APPROVED",
+    "is_ground_truth": true,
+    "confidence_score": 1.0,
+    "rationale": "POL-IAM-001 satisfies ISO 27001:2022 Control A.8.5 by implementing secure authentication mechanisms and defense against automated credential stuffing."
+  },
+  {
+    "policy_code": "POL-IAM-002",
+    "control_id": "NIST-AC-6",
+    "mapping_status": "HUMAN_APPROVED",
+    "is_ground_truth": true,
+    "confidence_score": 1.0,
+    "rationale": "POL-IAM-002 restricts superuser rights and requires individualized sudo elevation, directly implementing NIST AC-6 (Least Privilege)."
+  },
+  {
+    "policy_code": "POL-IAM-002",
+    "control_id": "ISO-A.8.2",
+    "mapping_status": "HUMAN_APPROVED",
+    "is_ground_truth": true,
+    "confidence_score": 1.0,
+    "rationale": "POL-IAM-002 fulfills ISO 27001 Control A.8.2 by restricting and strictly managing privileged access rights across OS and database tiers."
+  },
+  {
+    "policy_code": "POL-AUD-001",
+    "control_id": "NIST-AU-2",
+    "mapping_status": "HUMAN_APPROVED",
+    "is_ground_truth": true,
+    "confidence_score": 1.0,
+    "rationale": "POL-AUD-001 mandates logging of privilege elevations and authentication events, satisfying NIST AU-2 (Event Logging)."
+  },
+  {
+    "policy_code": "POL-AUD-001",
+    "control_id": "ISO-A.8.15",
+    "mapping_status": "HUMAN_APPROVED",
+    "is_ground_truth": true,
+    "confidence_score": 1.0,
+    "rationale": "POL-AUD-001 directly satisfies ISO 27001 Control A.8.15 by requiring persistent generation, storage, and protection of security audit logs."
+  },
+  {
+    "policy_code": "POL-DAT-001",
+    "control_id": "NIST-SC-8",
+    "mapping_status": "HUMAN_APPROVED",
+    "is_ground_truth": true,
+    "confidence_score": 1.0,
+    "rationale": "POL-DAT-001 mandates TLS encryption for all database connections, enforcing transmission confidentiality as required by NIST SC-8."
+  },
+  {
+    "policy_code": "POL-DAT-001",
+    "control_id": "ISO-A.8.24",
+    "mapping_status": "HUMAN_APPROVED",
+    "is_ground_truth": true,
+    "confidence_score": 1.0,
+    "rationale": "POL-DAT-001 enforces cryptographic controls on data in transit, fulfilling ISO 27001 Control A.8.24 (Use of Cryptography)."
+  },
+  {
+    "policy_code": "POL-DEV-001",
+    "control_id": "NIST-CM-3",
+    "mapping_status": "HUMAN_APPROVED",
+    "is_ground_truth": true,
+    "confidence_score": 1.0,
+    "rationale": "POL-DEV-001 enforces formal peer review and PR approvals before code enters production, operationalizing NIST CM-3 (Configuration Change Control)."
+  },
+  {
+    "policy_code": "POL-DEV-001",
+    "control_id": "ISO-A.8.32",
+    "mapping_status": "HUMAN_APPROVED",
+    "is_ground_truth": true,
+    "confidence_score": 1.0,
+    "rationale": "POL-DEV-001 fulfills ISO 27001 Control A.8.32 by preventing unapproved direct changes to production codebases."
+  },
+  {
+    "policy_code": "POL-AUP-001",
+    "control_id": "ISO-A.5.10",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.88,
+    "rationale": "POL-AUP-001 defines acceptable use parameters for corporate devices, networks, and data, aligning with ISO 27001 Control A.5.10."
+  },
+  {
+    "policy_code": "POL-AUP-001",
+    "control_id": "NIST-PL-4",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.85,
+    "rationale": "POL-AUP-001 establishes mandatory user rules of behavior and operational accountability required by NIST PL-4."
+  },
+  {
+    "policy_code": "POL-AST-001",
+    "control_id": "ISO-A.5.9",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.9,
+    "rationale": "POL-AST-001 mandates continuous asset discovery, ownership assignment, and inventory reconciliation as required by ISO 27001 Control A.5.9."
+  },
+  {
+    "policy_code": "POL-AST-001",
+    "control_id": "NIST-CM-8",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.92,
+    "rationale": "POL-AST-001 requires maintaining an authoritative, automated component inventory matching NIST CM-8 requirements."
+  },
+  {
+    "policy_code": "POL-CLS-001",
+    "control_id": "ISO-A.5.12",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.9,
+    "rationale": "POL-CLS-001 establishes a formal four-tier classification schema fulfilling ISO 27001 Control A.5.12."
+  },
+  {
+    "policy_code": "POL-CLS-001",
+    "control_id": "ISO-A.5.13",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.88,
+    "rationale": "POL-CLS-001 defines data labelling and protective handling standards in accordance with ISO 27001 Control A.5.13."
+  },
+  {
+    "policy_code": "POL-CLS-001",
+    "control_id": "NIST-SC-16",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.85,
+    "rationale": "POL-CLS-001 governs sensitivity classification and protective metadata attributes as outlined in NIST SC-16."
+  },
+  {
+    "policy_code": "POL-CRY-001",
+    "control_id": "ISO-A.8.24",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.92,
+    "rationale": "POL-CRY-001 mandates strong cryptographic cipher baselines and KMS key protection, satisfying ISO 27001 Control A.8.24."
+  },
+  {
+    "policy_code": "POL-CRY-001",
+    "control_id": "NIST-SC-12",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.9,
+    "rationale": "POL-CRY-001 operationalizes key establishment, HSM storage, and annual rotation required by NIST SC-12."
+  },
+  {
+    "policy_code": "POL-CRY-001",
+    "control_id": "NIST-SC-13",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.88,
+    "rationale": "POL-CRY-001 specifies approved cryptographic primitives and FIPS-validated modules required by NIST SC-13."
+  },
+  {
+    "policy_code": "POL-VUL-001",
+    "control_id": "ISO-A.8.8",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.95,
+    "rationale": "POL-VUL-001 mandates scheduled vulnerability discovery, severity-based SLAs, and patch validation in alignment with ISO 27001 Control A.8.8."
+  },
+  {
+    "policy_code": "POL-VUL-001",
+    "control_id": "NIST-SI-2",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.94,
+    "rationale": "POL-VUL-001 enforces systematic identification and remediation of software flaws within 7/30 days as mandated by NIST SI-2."
+  },
+  {
+    "policy_code": "POL-VUL-001",
+    "control_id": "NIST-RA-5",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.91,
+    "rationale": "POL-VUL-001 requires automated vulnerability scanning across all enterprise network ranges as specified in NIST RA-5."
+  },
+  {
+    "policy_code": "POL-IRP-001",
+    "control_id": "ISO-A.5.24",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.94,
+    "rationale": "POL-IRP-001 defines the organizational incident response structure and readiness procedures required by ISO 27001 Control A.5.24."
+  },
+  {
+    "policy_code": "POL-IRP-001",
+    "control_id": "ISO-A.5.25",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.89,
+    "rationale": "POL-IRP-001 establishes severity classification and triage criteria fulfilling ISO 27001 Control A.5.25."
+  },
+  {
+    "policy_code": "POL-IRP-001",
+    "control_id": "NIST-IR-4",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.95,
+    "rationale": "POL-IRP-001 defines containment, eradication, and forensic recovery playbooks required by NIST IR-4."
+  },
+  {
+    "policy_code": "POL-IRP-001",
+    "control_id": "NIST-IR-6",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.9,
+    "rationale": "POL-IRP-001 mandates 1-hour internal breach escalation and regulatory reporting timelines satisfying NIST IR-6."
+  },
+  {
+    "policy_code": "POL-BCP-001",
+    "control_id": "ISO-A.5.29",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.88,
+    "rationale": "POL-BCP-001 ensures continuity of information security controls during operational disruptions as required by ISO 27001 Control A.5.29."
+  },
+  {
+    "policy_code": "POL-BCP-001",
+    "control_id": "ISO-A.5.30",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.9,
+    "rationale": "POL-BCP-001 enforces multi-region failover and ICT readiness meeting ISO 27001 Control A.5.30."
+  },
+  {
+    "policy_code": "POL-BCP-001",
+    "control_id": "NIST-CP-2",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.92,
+    "rationale": "POL-BCP-001 documents organizational contingency and disaster recovery plans required by NIST CP-2."
+  },
+  {
+    "policy_code": "POL-BCP-002",
+    "control_id": "ISO-A.8.13",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.95,
+    "rationale": "POL-BCP-002 mandates daily incremental snapshots, WORM storage, and restoration tests satisfying ISO 27001 Control A.8.13."
+  },
+  {
+    "policy_code": "POL-BCP-002",
+    "control_id": "NIST-CP-9",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.95,
+    "rationale": "POL-BCP-002 operationalizes automated daily/weekly backup schedules and quarterly restore validation required by NIST CP-9."
+  },
+  {
+    "policy_code": "POL-CHG-001",
+    "control_id": "ISO-A.8.32",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.9,
+    "rationale": "POL-CHG-001 regulates formal change approval and rollback gating fulfilling ISO 27001 Control A.8.32."
+  },
+  {
+    "policy_code": "POL-CHG-001",
+    "control_id": "NIST-CM-3",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.9,
+    "rationale": "POL-CHG-001 mandates documented CAB approval and audit logging of production changes as required by NIST CM-3."
+  },
+  {
+    "policy_code": "POL-CFG-001",
+    "control_id": "ISO-A.8.9",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.92,
+    "rationale": "POL-CFG-001 establishes standardized CIS hardening baselines and drift monitoring fulfilling ISO 27001 Control A.8.9."
+  },
+  {
+    "policy_code": "POL-CFG-001",
+    "control_id": "NIST-CM-6",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.92,
+    "rationale": "POL-CFG-001 enforces mandatory secure configuration baselines across all OS and database tiers matching NIST CM-6."
+  },
+  {
+    "policy_code": "POL-CFG-001",
+    "control_id": "NIST-CM-7",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.89,
+    "rationale": "POL-CFG-001 mandates disabling non-essential services, default credentials, and ports fulfilling NIST CM-7 (Least Functionality)."
+  },
+  {
+    "policy_code": "POL-NET-001",
+    "control_id": "ISO-A.8.20",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.92,
+    "rationale": "POL-NET-001 establishes boundary defenses, stateful firewall allow-lists, and segmentation meeting ISO 27001 Control A.8.20."
+  },
+  {
+    "policy_code": "POL-NET-001",
+    "control_id": "NIST-SC-7",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.93,
+    "rationale": "POL-NET-001 enforces perimeter protection, default-deny security groups, and traffic isolation required by NIST SC-7."
+  },
+  {
+    "policy_code": "POL-TPM-001",
+    "control_id": "ISO-A.5.19",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.9,
+    "rationale": "POL-TPM-001 establishes vendor due diligence and contractual security obligations fulfilling ISO 27001 Control A.5.19."
+  },
+  {
+    "policy_code": "POL-TPM-001",
+    "control_id": "ISO-A.5.21",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.88,
+    "rationale": "POL-TPM-001 addresses ICT supply chain security requirements in alignment with ISO 27001 Control A.5.21."
+  },
+  {
+    "policy_code": "POL-TPM-001",
+    "control_id": "NIST-SR-3",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.9,
+    "rationale": "POL-TPM-001 mandates supply chain risk assessment and continuous monitoring matching NIST SR-3."
+  },
+  {
+    "policy_code": "POL-RSK-001",
+    "control_id": "ISO-A.5.7",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.87,
+    "rationale": "POL-RSK-001 incorporates threat intelligence into annual risk evaluations fulfilling ISO 27001 Control A.5.7."
+  },
+  {
+    "policy_code": "POL-RSK-001",
+    "control_id": "NIST-RA-3",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.92,
+    "rationale": "POL-RSK-001 standardizes periodic enterprise risk assessment methodology satisfying NIST RA-3."
+  },
+  {
+    "policy_code": "POL-TRN-001",
+    "control_id": "ISO-A.6.3",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.92,
+    "rationale": "POL-TRN-001 mandates annual employee awareness and quarterly phishing simulations meeting ISO 27001 Control A.6.3."
+  },
+  {
+    "policy_code": "POL-TRN-001",
+    "control_id": "NIST-AT-2",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.92,
+    "rationale": "POL-TRN-001 enforces mandatory literacy and cybersecurity awareness training for all users matching NIST AT-2."
+  },
+  {
+    "policy_code": "POL-TRN-001",
+    "control_id": "NIST-AT-3",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.89,
+    "rationale": "POL-TRN-001 requires specialized secure coding and administrative training fulfilling NIST AT-3."
+  },
+  {
+    "policy_code": "POL-PHY-001",
+    "control_id": "ISO-A.7.1",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.9,
+    "rationale": "POL-PHY-001 mandates physical security perimeters and electronic badging satisfying ISO 27001 Control A.7.1."
+  },
+  {
+    "policy_code": "POL-PHY-001",
+    "control_id": "ISO-A.7.4",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.88,
+    "rationale": "POL-PHY-001 enforces 90-day CCTV monitoring and physical surveillance meeting ISO 27001 Control A.7.4."
+  },
+  {
+    "policy_code": "POL-PHY-001",
+    "control_id": "NIST-PE-3",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.9,
+    "rationale": "POL-PHY-001 establishes physical access control points and visitor entry logs required by NIST PE-3."
+  },
+  {
+    "policy_code": "POL-RET-001",
+    "control_id": "ISO-A.8.10",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.9,
+    "rationale": "POL-RET-001 governs timely and secure data deletion upon expiration of retention periods matching ISO 27001 Control A.8.10."
+  },
+  {
+    "policy_code": "POL-RET-001",
+    "control_id": "ISO-A.7.14",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.88,
+    "rationale": "POL-RET-001 mandates certificates of destruction for decommissioned storage hardware satisfying ISO 27001 Control A.7.14."
+  },
+  {
+    "policy_code": "POL-RET-001",
+    "control_id": "NIST-MP-6",
+    "mapping_status": "PROPOSED",
+    "is_ground_truth": false,
+    "confidence_score": 0.92,
+    "rationale": "POL-RET-001 specifies NIST SP 800-88 cryptographic wipe and physical degaussing sanitization required by NIST MP-6."
+  }
+]

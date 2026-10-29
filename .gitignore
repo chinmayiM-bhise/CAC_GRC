@@ -1,0 +1,44 @@
+# CAC-GRC Git Ignore
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Environment and sensitive configuration
+.env
+.env.local
+.env.*.local
+
+# Asymmetric Private Keys and Certificates (Never commit private keys!)
+keys/*.pem
+keys/*.key
+*.key
+*.pem
+
+# Local databases and backups
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.bak
+*bak*
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE / Editor configuration
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

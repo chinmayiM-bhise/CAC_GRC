@@ -1,0 +1,171 @@
+[
+  {
+    "test_id": "TEST-VM-PAM-LOCKOUT-T1",
+    "policy_code": "POL-IAM-001",
+    "tier": 1,
+    "is_required": true,
+    "is_behavioral": false,
+    "target_type": "LINUX_VM",
+    "name": "Linux PAM faillock Configuration Inspection",
+    "description": "Inspects /etc/security/faillock.conf or /etc/pam.d/common-auth to verify deny <= 5 and unlock_time >= 900.",
+    "max_ttl_hours": 24,
+    "test_spec": {
+      "type": "ssh_command",
+      "command": "grep -E '^\\s*deny\\s*=\\s*[1-5]' /etc/security/faillock.conf || grep -E 'pam_faillock.so.*deny=[1-5]' /etc/pam.d/common-auth",
+      "expected_exit_code": 0,
+      "expected_regex": "deny=[1-5]"
+    }
+  },
+  {
+    "test_id": "TEST-VM-PAM-LOCKOUT-T2",
+    "policy_code": "POL-IAM-001",
+    "tier": 2,
+    "is_required": true,
+    "is_behavioral": true,
+    "target_type": "LINUX_VM",
+    "name": "Linux Active SSH Account Lockout Probe",
+    "description": "Actively executes 6 consecutive invalid SSH login attempts against a canary user account to verify that attempt #6 is locked.",
+    "max_ttl_hours": 12,
+    "test_spec": {
+      "type": "ssh_behavioral_probe",
+      "probe_action": "simulate_failed_logins",
+      "target_user": "audit_canary",
+      "attempt_count": 6,
+      "expected_lockout_trigger": true
+    }
+  },
+  {
+    "test_id": "TEST-VM-LEAST-PRIV-T1",
+    "policy_code": "POL-IAM-002",
+    "tier": 1,
+    "is_required": true,
+    "is_behavioral": false,
+    "target_type": "LINUX_VM",
+    "name": "Linux Sudoers & Root Login Inspection",
+    "description": "Verifies that PermitRootLogin is disabled in sshd_config and NOPASSWD is not granted to generic users.",
+    "max_ttl_hours": 24,
+    "test_spec": {
+      "type": "ssh_command",
+      "command": "grep -E '^\\s*PermitRootLogin\\s+no' /etc/ssh/sshd_config",
+      "expected_exit_code": 0,
+      "expected_regex": "PermitRootLogin\\s+no"
+    }
+  },
+  {
+    "test_id": "TEST-DB-LEAST-PRIV-T1",
+    "policy_code": "POL-IAM-002",
+    "tier": 1,
+    "is_required": true,
+    "is_behavioral": false,
+    "target_type": "POSTGRES_DB",
+    "name": "PostgreSQL Superuser Privilege Inspection",
+    "description": "Queries pg_roles to verify that only authorized DBA roles possess rolsuper=true.",
+    "max_ttl_hours": 24,
+    "test_spec": {
+      "type": "sql_query",
+      "query": "SELECT rolname FROM pg_roles WHERE rolsuper = true AND rolname NOT IN ('postgres', 'rds_admin');",
+      "expected_row_count": 0
+    }
+  },
+  {
+    "test_id": "TEST-VM-AUDITD-T1",
+    "policy_code": "POL-AUD-001",
+    "tier": 1,
+    "is_required": true,
+    "is_behavioral": false,
+    "target_type": "LINUX_VM",
+    "name": "Linux auditd Service Status Inspection",
+    "description": "Verifies systemctl is-active auditd returns active.",
+    "max_ttl_hours": 12,
+    "test_spec": {
+      "type": "ssh_command",
+      "command": "systemctl is-active auditd",
+      "expected_exit_code": 0,
+      "expected_output": "active"
+    }
+  },
+  {
+    "test_id": "TEST-VM-AUDITD-T2",
+    "policy_code": "POL-AUD-001",
+    "tier": 2,
+    "is_required": true,
+    "is_behavioral": true,
+    "target_type": "LINUX_VM",
+    "name": "Linux Active Audit Record Generation Probe",
+    "description": "Touches a monitored sensitive file and verifies an audit event appears in ausearch / audit.log within 10 seconds.",
+    "max_ttl_hours": 12,
+    "test_spec": {
+      "type": "ssh_behavioral_probe",
+      "probe_action": "trigger_monitored_syscall",
+      "target_file": "/etc/shadow",
+      "expected_audit_key": "shadow_watch",
+      "detection_window_seconds": 10
+    }
+  },
+  {
+    "test_id": "TEST-DB-TLS-T1",
+    "policy_code": "POL-DAT-001",
+    "tier": 1,
+    "is_required": true,
+    "is_behavioral": false,
+    "target_type": "POSTGRES_DB",
+    "name": "PostgreSQL SSL Setting Inspection",
+    "description": "Verifies that SHOW ssl returns on.",
+    "max_ttl_hours": 24,
+    "test_spec": {
+      "type": "sql_query",
+      "query": "SHOW ssl;",
+      "expected_result": "on"
+    }
+  },
+  {
+    "test_id": "TEST-DB-TLS-T2",
+    "policy_code": "POL-DAT-001",
+    "tier": 2,
+    "is_required": true,
+    "is_behavioral": true,
+    "target_type": "POSTGRES_DB",
+    "name": "PostgreSQL Plaintext Connection Rejection Probe",
+    "description": "Actively attempts to connect via raw TCP with sslmode=disable and asserts that the connection is rejected.",
+    "max_ttl_hours": 12,
+    "test_spec": {
+      "type": "db_behavioral_probe",
+      "probe_action": "attempt_unencrypted_handshake",
+      "sslmode": "disable",
+      "expected_rejection": true
+    }
+  },
+  {
+    "test_id": "TEST-DB-LOG-CONN-T1",
+    "policy_code": "POL-AUD-001",
+    "tier": 1,
+    "is_required": false,
+    "is_behavioral": false,
+    "target_type": "POSTGRES_DB",
+    "name": "PostgreSQL Connection Logging Inspection",
+    "description": "Verifies that SHOW log_connections returns on.",
+    "max_ttl_hours": 24,
+    "test_spec": {
+      "type": "sql_query",
+      "query": "SHOW log_connections;",
+      "expected_result": "on"
+    }
+  },
+  {
+    "test_id": "TEST-VM-IDLE-TIMEOUT-T1",
+    "policy_code": "POL-IAM-002",
+    "tier": 1,
+    "is_required": false,
+    "is_behavioral": false,
+    "target_type": "LINUX_VM",
+    "name": "Linux SSH Client Idle Timeout Inspection",
+    "description": "Verifies ClientAliveInterval <= 900 and ClientAliveCountMax <= 3 in /etc/ssh/sshd_config.",
+    "max_ttl_hours": 24,
+    "test_spec": {
+      "type": "ssh_command",
+      "command": "grep -E '^\\s*ClientAliveInterval\\s+[0-9]+' /etc/ssh/sshd_config",
+      "expected_exit_code": 0,
+      "expected_regex": "ClientAliveInterval"
+    }
+  }
+]
